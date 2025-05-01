@@ -3,24 +3,28 @@ package edu.mu.maven.Model;
 public class ExoticAnimal {
      protected String uniqueId, animalName, category, subSpecies;
      protected int yearsOld;
+     String newID = uniqueId.replaceAll("[^0-9]", "");
+ 	 int exoticId = Integer.parseInt(newID); 
      
-     public ExoticAnimal(String uniqueId, String animalName, String category, String subSpecies, int yearsOld)
+     public ExoticAnimal(int exoticId, String animalName, String category, String subSpecies, int yearsOld)
      {
-    	 this.uniqueId = uniqueId;
+    	 this.exoticId = exoticId;
     	 this.animalName = animalName;
     	 this.category = category;
     	 this.subSpecies = subSpecies;
     	 this.yearsOld = yearsOld;
      }
      
-     public String GetUnqiueId()
+     public int GetUniqueId()
      {
-     	return uniqueId;
+    	   
+     	return exoticId;
      }
      
-     public void SetUniqueID(String uniqueId)
+     public void SetUniqueID(int exoticId)
      {
-     	this.uniqueId = uniqueId;
+        
+     	this.exoticId = exoticId;
      }
      
      public String GetAnimalName()
