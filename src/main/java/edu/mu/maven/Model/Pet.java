@@ -5,6 +5,7 @@ public abstract class Pet {
    protected String name, type, species;
    protected boolean adopted;
     
+   
     public Pet(int id, String name, String type, String species, int age, boolean adopted)
     {
     	this.id = id;
