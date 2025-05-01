@@ -17,7 +17,14 @@ public class GUIView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private JTextPane title;
 	private JTable table;
+	private JButton btnSave;
+	private JButton btnAdopt;
+	private JButton btnRemove;
+	private JButton btnView;
+	private JButton btnAdd;
+	private JComboBox sortBox;
 
 	/**
 	 * Launch the application.
@@ -46,39 +53,39 @@ public class GUIView extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		JTextPane txtpnPets = new JTextPane();
-		txtpnPets.setEditable(false);
-		txtpnPets.setFont(new Font("Tahoma", Font.PLAIN, 50));
-		txtpnPets.setText("Pets!");
-		txtpnPets.setBounds(465, 10, 132, 76);
-		contentPane.add(txtpnPets);
-		
+
+		title = new JTextPane();
+		title.setEditable(false);
+		title.setFont(new Font("Tahoma", Font.PLAIN, 50));
+		title.setText("Pets!");
+		title.setBounds(465, 10, 132, 76);
+		contentPane.add(title);
+
 		table = new JTable();
 		table.setBounds(313, 255, 484, 376);
 		contentPane.add(table);
-		
-		JButton btnAdopt = new JButton("Adopt");
+
+		btnAdopt = new JButton("Adopt");
 		btnAdopt.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		btnAdopt.setBounds(245, 151, 142, 55);
 		contentPane.add(btnAdopt);
-		
-		JButton btnRemove = new JButton("Remove");
+
+		btnRemove = new JButton("Remove");
 		btnRemove.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		btnRemove.setBounds(439, 151, 142, 55);
 		contentPane.add(btnRemove);
-		
-		JButton btnView = new JButton("View Details");
+
+		btnView = new JButton("View Details");
 		btnView.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnView.setBounds(642, 151, 142, 55);
 		contentPane.add(btnView);
-		
-		JButton btnSave = new JButton("Save");
+
+		btnSave = new JButton("Save");
 		btnSave.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		btnSave.setBounds(823, 151, 142, 55);
 		contentPane.add(btnSave);
-		
-		JButton btnAdd = new JButton("Add");
+
+		btnAdd = new JButton("Add");
 		btnAdd.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -86,9 +93,74 @@ public class GUIView extends JFrame {
 		});
 		btnAdd.setBounds(64, 151, 142, 55);
 		contentPane.add(btnAdd);
-		
-		JComboBox sortBox = new JComboBox();
+
+		sortBox = new JComboBox();
 		sortBox.setBounds(206, 264, 97, 21);
 		contentPane.add(sortBox);
+
+	}
+
+	public JPanel getContentPane() {
+		return contentPane;
+	}
+
+	public void setContentPane(JPanel contentPane) {
+		this.contentPane = contentPane;
+	}
+
+	public JTable getTable() {
+		return table;
+	}
+
+	public void setTable(JTable table) {
+		this.table = table;
+	}
+
+	public JButton getBtnSave() {
+		return btnSave;
+	}
+
+	public void setBtnSave(JButton btnSave) {
+		this.btnSave = btnSave;
+	}
+
+	public JButton getBtnAdopt() {
+		return btnAdopt;
+	}
+
+	public void setBtnAdopt(JButton btnAdopt) {
+		this.btnAdopt = btnAdopt;
+	}
+
+	public JButton getBtnRemove() {
+		return btnRemove;
+	}
+
+	public void setBtnRemove(JButton btnRemove) {
+		this.btnRemove = btnRemove;
+	}
+
+	public JButton getBtnView() {
+		return btnView;
+	}
+
+	public void setBtnView(JButton btnView) {
+		this.btnView = btnView;
+	}
+
+	public JButton getBtnAdd() {
+		return btnAdd;
+	}
+
+	public void setBtnAdd(JButton btnAdd) {
+		this.btnAdd = btnAdd;
+	}
+
+	public JComboBox getSortBox() {
+		return sortBox;
+	}
+
+	public void setSortBox(JComboBox sortBox) {
+		this.sortBox = sortBox;
 	}
 }
