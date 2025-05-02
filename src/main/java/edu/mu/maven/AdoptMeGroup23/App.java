@@ -3,7 +3,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import com.google.gson.Gson;
+import com.google.gson.*;
 import edu.mu.maven.Model.Pet;
 import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
@@ -22,11 +22,18 @@ public class App {
 		String filePath =  directory  + File.separator + "src" + File.separator + "main"
 				+ File.separator + "java" + File.separator + "resources" + File.separator
 				+ "pets.json";
-		BufferedReader br = new BufferedReader(new FileReader(filePath));
-	   Type type = new TypeToken<ArrayList<Pet>>() {}.getType();
-	   pet = gson.fromJson(br, type);
-	   System.out.println(pet);
-	   System.out.println(pet.get(0).GetName());
+	   BufferedReader br = new BufferedReader(new FileReader(filePath));
+	   JsonArray jsonArray = gson.fromJson(br, JsonArray.class);
+	   JsonObject js = jsonArray.getAsJsonObject();
+	   int id = js.get("id").getAsInt();
+	   String name = js.get("name").getAsString();
+	   String type = js.get("type").getAsString();
+	   String species = js.get("species").getAsString();
+	   int age = js.get("age").getAsInt();
+	   boolean adopted = js.get("adopted").getAsBoolean();
+	   System.out.println("id: " + id);
+	   
+	   
 	   br.close();
 	} catch (FileNotFoundException e) {
 		// TODO Auto-generated catch block
