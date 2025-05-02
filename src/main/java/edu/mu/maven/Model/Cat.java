@@ -6,5 +6,10 @@ public class Cat extends Pet {
 		super(id, name, "cat", species, age, adopted);
 		
 	}
+	
+	@Override
+	public String GetType() {
+        return "Cat";  
+    }
 
 }

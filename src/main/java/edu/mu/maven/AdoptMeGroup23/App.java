@@ -3,7 +3,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import edu.mu.maven.Model.Pet;
 import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
@@ -11,11 +12,14 @@ import java.util.List;
 import java.lang.reflect.Type;
 import java.io.IOException;
 
+
 public class App {
     public static void main(String[] args) {
     
     List<Pet> pet = new ArrayList<>();
-    Gson gson = new Gson();
+    GsonBuilder gsonBuilder = new GsonBuilder();
+    		gsonBuilder.registerTypeAdapter(Pet.class, new PetInstanceCreator());
+    		.create();
       
 	try {
 		String directory = System.getProperty("user.dir");
@@ -23,17 +27,10 @@ public class App {
 				+ File.separator + "java" + File.separator + "resources" + File.separator
 				+ "pets.json";
 	   BufferedReader br = new BufferedReader(new FileReader(filePath));
-	   JsonArray jsonArray = gson.fromJson(br, JsonArray.class);
-	   JsonObject js = jsonArray.getAsJsonObject();
-	   int id = js.get("id").getAsInt();
-	   String name = js.get("name").getAsString();
-	   String type = js.get("type").getAsString();
-	   String species = js.get("species").getAsString();
-	   int age = js.get("age").getAsInt();
-	   boolean adopted = js.get("adopted").getAsBoolean();
-	   System.out.println("id: " + id);
-	   
-	   
+	   Type type = new TypeToken<ArrayList<Pet>>() {}.getType(); //it could be the gettype
+	   pet = gson.fromJson(br, type);
+	   System.out.println(pet);
+	   System.out.println(pet.get(0).GetName());
 	   br.close();
 	} catch (FileNotFoundException e) {
 		// TODO Auto-generated catch block
@@ -45,3 +42,7 @@ public class App {
 	
     }
 }
+
+//the value fields should be passed as strings and then cast back 
+//try the adapter
+
