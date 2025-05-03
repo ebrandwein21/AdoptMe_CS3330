@@ -6,5 +6,10 @@ public class Rabbit extends Pet {
 		super(id, name, "rabbit", species, age, adopted);
 		// TODO Auto-generated constructor stub
 	}
+	
+	@Override
+	public String GetType() {
+        return "Rabbit";  
+    }
 
 }
