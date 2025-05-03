@@ -68,6 +68,7 @@ public class App {
 		{
 			throw new IllegalArgumentException("Unknown pet type: " + type);	
 	    }
+	    
 		petList.add(pet);
         System.out.println("Added pet: " + pet.GetName());
 		
