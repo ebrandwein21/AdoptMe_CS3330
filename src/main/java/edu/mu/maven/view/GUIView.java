@@ -36,7 +36,6 @@ public class GUIView extends JFrame {
 				try {
 					GUIView frame = new GUIView();
 					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -52,6 +51,7 @@ public class GUIView extends JFrame {
 		setBounds(100, 100, 718, 719);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setVisible(true);
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);

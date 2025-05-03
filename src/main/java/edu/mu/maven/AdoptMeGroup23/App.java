@@ -11,6 +11,7 @@ import edu.mu.maven.Model.Cat;
 import edu.mu.maven.Model.Dog;
 import edu.mu.maven.Model.Pet;
 import edu.mu.maven.Model.Rabbit;
+import edu.mu.maven.view.GUIView;
 
 import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
@@ -24,10 +25,10 @@ import com.google.gson.JsonObject;
 
 public class App {
     public static void main(String[] args) {
-    
     Gson gson = new Gson();
     List<Pet> petList = new ArrayList<>();
-      
+	GUIView gui = new GUIView();
+	
 	try {
 		String directory = System.getProperty("user.dir");
 		String filePath =  directory  + File.separator + "src" + File.separator + "main"
@@ -70,7 +71,6 @@ public class App {
 	    }
 		petList.add(pet);
         System.out.println("Added pet: " + pet.GetName());
-		
 		}
 	} catch (FileNotFoundException e) {
 		// TODO Auto-generated catch block
