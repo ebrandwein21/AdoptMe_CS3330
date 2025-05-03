@@ -6,6 +6,6 @@ public class AgeComparator implements Comparator<Pet>
 {
 	public int compare(Pet pet1, Pet pet2)
 	{
-		return Integer.compare(pet1.age, pet2.age);
+		return Integer.compare(pet1.GetAge(), pet2.GetAge());
 	}
 }
