@@ -4,7 +4,7 @@ package edu.mu.maven.Model;
 public class ExoticPetAdapter extends Pet{
 		
 	
-	private ExoticAnimal exoticPet;
+	private ExoticAnimal exoticPet = null;
 	
 	
 	public ExoticPetAdapter(ExoticAnimal exoticPet)
