@@ -55,18 +55,19 @@ public class App {
 			System.out.println("Pet added: " + pet.GetName());
 		}
 		
-		if(type.equals("Cat"))
+	    else if(type.equals("Cat"))
 		{
 			pet = gson.fromJson(petObject, Cat.class);
 			System.out.println("Pet added: " + pet.GetName());
 		}
-		if(type.equals("Rabbit"))
+	    else if(type.equals("Rabbit"))
 		{
 			pet = gson.fromJson(petObject, Rabbit.class);
 			System.out.println("Pet added: " + pet.GetName());
-		}
-		//else statement was causing an exception to be thrown despite all 4 animals printing correctly, must fix later!!!
-		
+		}else 
+		{
+			throw new IllegalArgumentException("Unknown pet type: " + type);	
+	    }
 		petList.add(pet);
         System.out.println("Added pet: " + pet.GetName());
 		
