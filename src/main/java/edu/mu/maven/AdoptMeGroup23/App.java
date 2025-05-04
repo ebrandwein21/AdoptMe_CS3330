@@ -6,7 +6,6 @@ import java.io.FileReader;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
-
 import edu.mu.maven.Model.Cat;
 import edu.mu.maven.Model.Dog;
 import edu.mu.maven.Model.Pet;
@@ -14,13 +13,10 @@ import edu.mu.maven.Model.Rabbit;
 import edu.mu.maven.Model.Shelter;
 import edu.mu.maven.controller.PetAdoptionController;
 import edu.mu.maven.view.GUIView;
-
 import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.SwingUtilities;
-
 import java.lang.reflect.Type;
 import java.io.IOException;
 import com.google.gson.JsonParser;
@@ -34,15 +30,8 @@ public class App {
     		@Override
     		public void run() {
     			PetAdoptionController controller = new PetAdoptionController(new Shelter<>(), new GUIView());
-    			controller.initiate();
+    	     	controller.initiate();
     	}
-    	
     });
     }
 }
-
-
-
-//the value fields should be passed as strings and then cast back 
-//try the adapter
-//use serialization/deserealization. get components from json file, use type and use chained if statement, create object based on objectZZ
