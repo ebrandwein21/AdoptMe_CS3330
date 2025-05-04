@@ -11,5 +11,4 @@ public class Cat extends Pet {
 	public String GetType() {
         return "Cat";  
     }
-
 }

@@ -10,7 +10,6 @@ public class ExoticPetAdapter extends Pet{
 	public ExoticPetAdapter(ExoticAnimal exoticPet)
 	{
 		super(exoticPet.GetUniqueId(), exoticPet.GetAnimalName(), exoticPet.GetCategory(), exoticPet.GetSubSpecies(), exoticPet.GetYearsOld(), false);
-		this.exoticPet = exoticPet;
-		
+		this.exoticPet = exoticPet;	
 	}
 }

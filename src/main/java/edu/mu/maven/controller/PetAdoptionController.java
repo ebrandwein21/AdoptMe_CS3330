@@ -1,11 +1,19 @@
 package edu.mu.maven.controller;
 
 import edu.mu.maven.Model.Pet;
+import edu.mu.maven.Model.Shelter;
 import edu.mu.maven.view.GUIView;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import edu.mu.maven.Model.AgeComparator;
+import edu.mu.maven.Model.SpeciesComparator;
 
 public class PetAdoptionController{
 	
+	private List<Pet> petList = new ArrayList<>();
 	private Pet model;
 	private GUIView view;
 	
@@ -14,7 +22,7 @@ public class PetAdoptionController{
 		view = v;
 	}
 	
-	private void initController() {
+	public void initController() {
 		view.getBtnAdopt().addActionListener(e -> adoptPet());
 		view.getBtnAdd().addActionListener(e -> addPet());
 		view.getBtnRemove().addActionListener(e -> removePet());
@@ -38,20 +46,20 @@ public class PetAdoptionController{
 	}
 	
 	private void speciesSort() {
-		// TODO Auto-generated method stub
-		//Sort pets alphabetically by species
-		
+		Collections.sort(petList, new SpeciesComparator());
+		//feels like there is something we have to call to actually initiate view
+
 	}
 
 	private void ageSort() {
-		// TODO Auto-generated method stub
-		//Sort pets numerically by age
+		Collections.sort(petList, new AgeComparator());
+		//feels like there is something we have to call to actually initiate view
 	}
 
 	private void nameSort() {
-		// TODO Auto-generated method stub
-		//Sort pets alphabetically by name
-		
+		Collections.sort(petList); 
+		//feels like there is something we have to call to actually initiate view
+				
 	}
 
 	private Object view() {
@@ -73,17 +81,11 @@ public class PetAdoptionController{
 	}
 
 	private Object addPet() {
-		// TODO Auto-generated method stub
-		//Add pet to list
-		//Prompt user with new window to enter pet's information
-		return null;
+        return null;
+
 	}
 
 	private void adoptPet() {
 		//Changes specific pet's information to "adopted" and removes ability to adopt this animal
 	}
-	
-	
-	
-	
 }
