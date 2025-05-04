@@ -37,8 +37,10 @@ public class App {
     			controller.initiate();
     	}
     	
+    });
     }
 }
+
 
 
 //the value fields should be passed as strings and then cast back 
