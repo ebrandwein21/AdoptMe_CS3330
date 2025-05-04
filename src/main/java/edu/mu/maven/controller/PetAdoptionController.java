@@ -19,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
 
 import com.google.gson.Gson;
 
+import edu.mu.maven.AdoptMeGroup23.App;
 import edu.mu.maven.AdoptMeGroup23.ExoticAnimalJson;
 import edu.mu.maven.AdoptMeGroup23.PetLoader;
 import edu.mu.maven.Model.AgeComparator;
@@ -27,11 +28,15 @@ import edu.mu.maven.Model.SpeciesComparator;
 
 public class PetAdoptionController{
 	
+	private List<Pet> combinedPetList = new ArrayList<>();
 	private List<Pet> petList = new ArrayList<>();
 	private List<ExoticAnimal> exoticPetList = new ArrayList<>();
 	private Shelter<Pet> model;
 	private DefaultTableModel table;
 	private GUIView view;
+	List<Pet> allPets = new ArrayList<>();
+	
+
 	
 	public PetAdoptionController(Shelter<Pet> m, GUIView v){
 		model = m;
@@ -84,17 +89,17 @@ public class PetAdoptionController{
 	}
 	
 	private void speciesSort() {
-		Collections.sort(petList, new SpeciesComparator());
+		Collections.sort(combinedPetList, new SpeciesComparator());
 		updateGuiTableForSorting();
 	}
 
 	private void ageSort() {
-		Collections.sort(petList, new AgeComparator());
+		Collections.sort(combinedPetList, new AgeComparator());
 		updateGuiTableForSorting();
 	}
 
 	private void nameSort() {
-		Collections.sort(petList); 
+		Collections.sort(combinedPetList); 
 		updateGuiTableForSorting();
 	}
 	
@@ -104,6 +109,7 @@ public class PetAdoptionController{
     public void view() {
 		petList = PetLoader.loadPets();
 		exoticPetList = ExoticAnimalJson.loadExoticAnimal();
+		combinedPetList = App.combineLoaders();
 		
 		if(view.getTable().getSelectedRow() != -1) {
 			System.out.println(exoticPetList.size());
@@ -133,8 +139,7 @@ public class PetAdoptionController{
 	}
 
 	public void save() { //a file is saving, however, for now it is an empty list 
-		PetLoader.savePets(petList);
-		ExoticAnimalJson.saveExotic(exoticPetList);
+		App.savedCombinedLoaders(combinedPetList);
 		
 	}
 	/**
@@ -182,25 +187,17 @@ public class PetAdoptionController{
 		table = view.getTableModel();
 		table.setRowCount(0);
 		
-		for(Pet pet : petList)
+		for(Pet pet : combinedPetList)
 		{
 			table.addRow(new Object[]{pet.GetName()});
 		}
-		
-		for(ExoticAnimal exoticPet : exoticPetList)
-		{
-			table.addRow(new Object[]{exoticPet.GetAnimalName()});
-		}
-	}
-		
-	/**
-	 * adoptPet changes a specific pet's information to "adopted" and removes the ability to adopt this animal
-	 */
+	}	
+
 	private void adoptPet() {
 		int index = view.getTable().getSelectedRow();
 		if(index != -1) {
-			if(petList.get(index).GetAdopted() != true) {
-				petList.get(index).SetAdopted(true);
+			if(combinedPetList.get(index).GetAdopted() != true) {
+				combinedPetList.get(index).SetAdopted(true);
 			}
 			else {
 				view.getCannotAdopt().setText("Sorry this pet has already been adopted");
