@@ -90,10 +90,7 @@ public class PetAdoptionController{
 	}
 
 	private Object addPet() {
-		// TODO Auto-generated method stub
-		//Add pet to list
-		//Prompt user with new window to enter pet's information
-		return null;
+	   return null;
 	}
 
 	private void adoptPet() {

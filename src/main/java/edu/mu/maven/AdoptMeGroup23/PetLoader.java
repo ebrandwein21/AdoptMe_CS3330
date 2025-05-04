@@ -80,7 +80,6 @@ public class PetLoader
 	    
 	    
 		petList.add(pet);
-        System.out.println("Added pet: " + pet.GetName());
        
 		}
 	} catch (FileNotFoundException e) {
