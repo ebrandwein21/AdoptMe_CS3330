@@ -87,7 +87,8 @@ public class PetAdoptionController{
 
     public void view() {
 		petList = PetLoader.loadPets();
-		exoticPetList = ExoticAnimalJson.loadExoticAnimal();	
+		exoticPetList = ExoticAnimalJson.loadExoticAnimal();
+		//method to be called to populate table 
 	}
 
 	public void save() { //a file is saving, however, for now it is an empty list 

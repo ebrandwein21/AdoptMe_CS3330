@@ -17,6 +17,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.JList;
 
 public class GUIView extends JFrame {
@@ -171,6 +172,11 @@ public class GUIView extends JFrame {
 
 	public void setSortBox(JComboBox sortBox) {
 		this.sortBox = sortBox;
+	}
+	
+	public void adoptionTable()
+	{
+		
 	}
 	
 	
