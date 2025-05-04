@@ -24,6 +24,7 @@ import edu.mu.maven.AdoptMeGroup23.ExoticAnimalJson;
 import edu.mu.maven.AdoptMeGroup23.PetLoader;
 import edu.mu.maven.Model.AgeComparator;
 import edu.mu.maven.Model.ExoticAnimal;
+import edu.mu.maven.Model.ExoticPetAdapter;
 import edu.mu.maven.Model.SpeciesComparator;
 
 public class PetAdoptionController{
@@ -149,7 +150,7 @@ public class PetAdoptionController{
 		
 		AddPetView newPet = new AddPetView();
 		newPet.getAddPetBtn().addActionListener(e -> {
-			int id = petList.get((petList.size() - 1)).GetID() + 1;
+			int id = combinedPetList.get((petList.size() - 1)).GetID() + 1;
 			String name = newPet.getNameField().getText();
 			String animal = newPet.getAnimalField().getText();
 			String species = newPet.getSpeciesField().getText();
@@ -162,7 +163,8 @@ public class PetAdoptionController{
 				System.err.println("Input an integer");
 			}
 			ExoticAnimal pet = new ExoticAnimal(String.valueOf(id), name, animal, species, age);
-			exoticPetList.add(pet);
+			Pet exoticPetTransfer = new ExoticPetAdapter(pet);
+			combinedPetList.add(exoticPetTransfer);
 			DefaultTableModel model = (DefaultTableModel) view.getTable().getModel();
 			model.addRow(new Object[]{
 				pet.GetAnimalName()
