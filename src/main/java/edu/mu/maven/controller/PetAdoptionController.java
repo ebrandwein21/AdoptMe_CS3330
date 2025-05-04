@@ -27,6 +27,7 @@ public class PetAdoptionController{
 	public PetAdoptionController(Shelter<Pet> m, GUIView v){
 		model = m;
 		view = v;
+		this.initController();
 	}
 	
 	private void initController() {
