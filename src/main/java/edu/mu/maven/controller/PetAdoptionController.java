@@ -14,15 +14,15 @@ import edu.mu.maven.Model.SpeciesComparator;
 public class PetAdoptionController{
 	
 	private List<Pet> petList = new ArrayList<>();
-	private Pet model;
+	private Shelter<Pet> model;
 	private GUIView view;
 	
-	public PetAdoptionController(Pet m, GUIView v){
+	public PetAdoptionController(Shelter<Pet> m, GUIView v){
 		model = m;
 		view = v;
 	}
 	
-	public void initController() {
+	private void initController() {
 		view.getBtnAdopt().addActionListener(e -> adoptPet());
 		view.getBtnAdd().addActionListener(e -> addPet());
 		view.getBtnRemove().addActionListener(e -> removePet());
@@ -81,11 +81,16 @@ public class PetAdoptionController{
 	}
 
 	private Object addPet() {
-        return null;
-
+		// TODO Auto-generated method stub
+		//Add pet to list
+		//Prompt user with new window to enter pet's information
+		return null;
 	}
 
 	private void adoptPet() {
 		//Changes specific pet's information to "adopted" and removes ability to adopt this animal
+	}
+	public void initiate() {
+		view.setVisible(true);
 	}
 }

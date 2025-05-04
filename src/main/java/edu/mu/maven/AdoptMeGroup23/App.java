@@ -11,12 +11,16 @@ import edu.mu.maven.Model.Cat;
 import edu.mu.maven.Model.Dog;
 import edu.mu.maven.Model.Pet;
 import edu.mu.maven.Model.Rabbit;
+import edu.mu.maven.Model.Shelter;
 import edu.mu.maven.controller.PetAdoptionController;
 import edu.mu.maven.view.GUIView;
 
 import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.SwingUtilities;
+
 import java.lang.reflect.Type;
 import java.io.IOException;
 import com.google.gson.JsonParser;
@@ -26,7 +30,13 @@ import com.google.gson.JsonObject;
 
 public class App {
     public static void main(String[] args) {
-        
+    	SwingUtilities.invokeLater(new Runnable() {
+    		@Override
+    		public void run() {
+    			PetAdoptionController controller = new PetAdoptionController(new Shelter<>(), new GUIView());
+    			controller.initiate();
+    	}
+    	
     }
 }
 
