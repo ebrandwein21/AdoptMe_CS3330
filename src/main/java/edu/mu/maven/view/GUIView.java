@@ -5,6 +5,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import edu.mu.maven.Model.Pet;
+
 import javax.swing.JTextPane;
 import java.awt.Font;
 import javax.swing.JTable;
@@ -13,6 +16,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JList;
 
 public class GUIView extends JFrame {
 
@@ -26,6 +30,7 @@ public class GUIView extends JFrame {
 	private JButton btnAdd;
 	private JComboBox sortBox;
 	private JLabel title;
+	private JList<Pet> petList;
 
 	/**
 	 * Launch the application.
@@ -161,5 +166,10 @@ public class GUIView extends JFrame {
 
 	public void setSortBox(JComboBox sortBox) {
 		this.sortBox = sortBox;
+	}
+	
+	public Pet getSelectedPet()
+	{
+		return petList.getSelectedValue();
 	}
 }
