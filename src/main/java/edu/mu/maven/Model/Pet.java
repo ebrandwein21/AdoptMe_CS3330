@@ -1,6 +1,6 @@
 package edu.mu.maven.Model;
 
-public abstract class Pet {
+public abstract class Pet implements Comparable<Pet> {
    protected int age, id;
    protected String name, type, species;
    protected boolean adopted;
@@ -75,5 +75,10 @@ public abstract class Pet {
     {
     	this.adopted = adopted;
     }
-   
+    
+    public int compareTo(Pet pet)
+    {
+    	return this.name.compareTo(pet.GetName());
+    	
+    }
 }

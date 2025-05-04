@@ -2,16 +2,37 @@ package edu.mu.maven.controller;
 
 import edu.mu.maven.Model.Pet;
 import edu.mu.maven.view.AddPetView;
+import edu.mu.maven.Model.Shelter;
 import edu.mu.maven.view.GUIView;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+
+import com.google.gson.Gson;
+
+import edu.mu.maven.AdoptMeGroup23.ExoticAnimalJson;
+import edu.mu.maven.AdoptMeGroup23.PetLoader;
+import edu.mu.maven.Model.AgeComparator;
+import edu.mu.maven.Model.ExoticAnimal;
+import edu.mu.maven.Model.SpeciesComparator;
 
 public class PetAdoptionController{
 	
-	private Pet model;
+	private List<Pet> petList = new ArrayList<>();
+	private List<ExoticAnimal> exoticPetList = new ArrayList<>();
+	private Shelter<Pet> model;
 	private GUIView view;
 	
-	public PetAdoptionController(Pet m, GUIView v){
+	public PetAdoptionController(Shelter<Pet> m, GUIView v){
 		model = m;
 		view = v;
+		this.initController();
 	}
 	
 	private void initController() {
@@ -38,32 +59,29 @@ public class PetAdoptionController{
 	}
 	
 	private void speciesSort() {
-		// TODO Auto-generated method stub
-		//Sort pets alphabetically by species
-		
+		Collections.sort(petList, new SpeciesComparator());
+		//feels like there is something we have to call to actually initiate view
 	}
 
 	private void ageSort() {
-		// TODO Auto-generated method stub
-		//Sort pets numerically by age
+		Collections.sort(petList, new AgeComparator());
+		//feels like there is something we have to call to actually initiate view
 	}
 
 	private void nameSort() {
-		// TODO Auto-generated method stub
-		//Sort pets alphabetically by name
-		
+		Collections.sort(petList); 
+		//feels like there is something we have to call to actually initiate view			
 	}
 
-	private Object view() {
-		// TODO Auto-generated method stub
-		//Open a window with the selected pet's information
-		return null;
+    public void view() {
+		petList = PetLoader.loadPets();
+		exoticPetList = ExoticAnimalJson.loadExoticAnimal();	
 	}
 
-	private Object save() {
-		// TODO Auto-generated method stub
-		//Update pets.json / exotic_animals.json to reflect GUI list
-		return null;
+	public void save() { //a file is saving, however, for now it is an empty list 
+				
+		PetLoader.savePets(petList);
+		ExoticAnimalJson.saveExotic(exoticPetList);
 	}
 
 	private Object removePet() {
@@ -78,14 +96,13 @@ public class PetAdoptionController{
 		//Prompt user with new window to enter pet's information
 		
 		AddPetView newPet = new AddPetView();
-		return null;
+		return newPet;
 	}
 
 	private void adoptPet() {
 		//Changes specific pet's information to "adopted" and removes ability to adopt this animal
 	}
-	
-	
-	
-	
+	public void initiate() {
+		view.setVisible(true);
+	}
 }

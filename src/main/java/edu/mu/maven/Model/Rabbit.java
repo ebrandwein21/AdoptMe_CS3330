@@ -11,5 +11,4 @@ public class Rabbit extends Pet {
 	public String GetType() {
         return "Rabbit";  
     }
-
 }
