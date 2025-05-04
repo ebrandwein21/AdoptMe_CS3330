@@ -19,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
 
 import com.google.gson.Gson;
 
+import edu.mu.maven.AdoptMeGroup23.App;
 import edu.mu.maven.AdoptMeGroup23.ExoticAnimalJson;
 import edu.mu.maven.AdoptMeGroup23.PetLoader;
 import edu.mu.maven.Model.AgeComparator;
@@ -27,11 +28,15 @@ import edu.mu.maven.Model.SpeciesComparator;
 
 public class PetAdoptionController{
 	
+	private List<Pet> combinedPetList = new ArrayList<>();
 	private List<Pet> petList = new ArrayList<>();
 	private List<ExoticAnimal> exoticPetList = new ArrayList<>();
 	private Shelter<Pet> model;
 	private DefaultTableModel table;
 	private GUIView view;
+	List<Pet> allPets = new ArrayList<>();
+	
+
 	
 	public PetAdoptionController(Shelter<Pet> m, GUIView v){
 		model = m;
@@ -78,23 +83,24 @@ public class PetAdoptionController{
 	}
 	
 	private void speciesSort() {
-		Collections.sort(petList, new SpeciesComparator());
+		Collections.sort(combinedPetList, new SpeciesComparator());
 		updateGuiTableForSorting();
 	}
 
 	private void ageSort() {
-		Collections.sort(petList, new AgeComparator());
+		Collections.sort(combinedPetList, new AgeComparator());
 		updateGuiTableForSorting();
 	}
 
 	private void nameSort() {
-		Collections.sort(petList); 
+		Collections.sort(combinedPetList); 
 		updateGuiTableForSorting();
 	}
 
     public void view() {
 		petList = PetLoader.loadPets();
 		exoticPetList = ExoticAnimalJson.loadExoticAnimal();
+		combinedPetList = App.combineLoaders();
 		
 		if(view.getTable().getSelectedRow() != -1) {
 			int index = view.getTable().getSelectedRow();
@@ -160,17 +166,11 @@ public class PetAdoptionController{
 		table = view.getTableModel();
 		table.setRowCount(0);
 		
-		for(Pet pet : petList)
+		for(Pet pet : combinedPetList)
 		{
 			table.addRow(new Object[]{pet.GetName()});
 		}
-		
-		for(ExoticAnimal exoticPet : exoticPetList)
-		{
-			table.addRow(new Object[]{exoticPet.GetAnimalName()});
-		}
-	}
-		
+	}	
 
 	private void adoptPet() {
 		//Changes specific pet's information to "adopted" and removes ability to adopt this animal

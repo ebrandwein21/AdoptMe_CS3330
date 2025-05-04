@@ -8,6 +8,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import edu.mu.maven.Model.Cat;
 import edu.mu.maven.Model.Dog;
+import edu.mu.maven.Model.ExoticAnimal;
+import edu.mu.maven.Model.ExoticPetAdapter;
 import edu.mu.maven.Model.Pet;
 import edu.mu.maven.Model.Rabbit;
 
@@ -43,4 +45,23 @@ public class App {
     	}
     });
     }
+    
+    public static List<Pet> combineLoaders()
+    {
+    	List<Pet> combinedPetList = new ArrayList<>();
+    	List<Pet> petList = PetLoader.loadPets();
+    	combinedPetList.addAll(petList);
+    	List<ExoticAnimal> exoticAnimalList = ExoticAnimalJson.loadExoticAnimal();
+    			{
+    		for(ExoticAnimal exoticPet : exoticAnimalList)
+    		{
+    		    Pet exoticPetTransfer = new ExoticPetAdapter(exoticPet);
+    		    combinedPetList.add(exoticPetTransfer);
+    		}
+    	
+     }
+    			return combinedPetList;
+    	
+   }
+    
 }
