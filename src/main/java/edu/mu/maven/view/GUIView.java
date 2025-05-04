@@ -32,6 +32,7 @@ public class GUIView extends JFrame {
 	private JButton btnAdd;
 	private JComboBox sortBox;
 	private JLabel title;
+	private JLabel cannotAdopt;
 
 	/**
 	 * Launch the application.
@@ -113,6 +114,18 @@ public class GUIView extends JFrame {
 		title.setBounds(271, 10, 210, 129);
 		contentPane.add(title);
 		
+		cannotAdopt = new JLabel("");
+		cannotAdopt.setBounds(586, 214, 45, 13);
+		contentPane.add(cannotAdopt);
+		
+	}
+
+	public JLabel getCannotAdopt() {
+		return cannotAdopt;
+	}
+
+	public void setCannotAdopt(JLabel cannotAdopt) {
+		this.cannotAdopt = cannotAdopt;
 	}
 
 	public DefaultTableModel getTableModel() {

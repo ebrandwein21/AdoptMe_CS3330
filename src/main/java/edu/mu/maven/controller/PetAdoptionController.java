@@ -162,6 +162,16 @@ public class PetAdoptionController{
 
 	private void adoptPet() {
 		//Changes specific pet's information to "adopted" and removes ability to adopt this animal
+		int index = view.getTable().getSelectedRow();
+		if(index != -1) {
+			if(petList.get(index).GetAdopted() != true) {
+				petList.get(index).SetAdopted(true);
+			}
+			else {
+				view.getCannotAdopt().setText("Sorry this pet has already been adopted");
+			}
+
+		}
 	}
 	public void initiate() {
 		view.setVisible(true);
