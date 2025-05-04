@@ -1,8 +1,8 @@
 package edu.mu.maven.controller;
 
 import edu.mu.maven.Model.Pet;
-import edu.mu.maven.view.AddPetView;
 import edu.mu.maven.Model.Shelter;
+import edu.mu.maven.view.AddPetView;
 import edu.mu.maven.view.GUIView;
 
 import java.io.File;
@@ -47,6 +47,8 @@ public class PetAdoptionController{
 		}
 	
 	public void initController() {
+		
+		
 		view.getBtnAdopt().addActionListener(e -> adoptPet());
 		view.getBtnAdd().addActionListener(e -> addPet());
 		view.getBtnRemove().addActionListener(e -> removePet());
@@ -94,6 +96,7 @@ public class PetAdoptionController{
 	public void save() { //a file is saving, however, for now it is an empty list 
 		PetLoader.savePets(petList);
 		ExoticAnimalJson.saveExotic(exoticPetList);
+		
 	}
 
 	private Object removePet() {
@@ -119,6 +122,7 @@ public class PetAdoptionController{
 			view.getTable().setValueAt(pet.GetAnimalName(), (exoticPetList.size() + petList.size()) -1, 0);
 		});
 		return newPet;
+
 	}
 
 	private void adoptPet() {

@@ -17,8 +17,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.JList;
 
 public class GUIView extends JFrame {
 
@@ -32,7 +30,6 @@ public class GUIView extends JFrame {
 	private JButton btnAdd;
 	private JComboBox sortBox;
 	private JLabel title;
-	private JList petList;
 
 	/**
 	 * Launch the application.
@@ -43,6 +40,7 @@ public class GUIView extends JFrame {
 				try {
 					GUIView frame = new GUIView();
 					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -58,7 +56,6 @@ public class GUIView extends JFrame {
 		setBounds(100, 100, 718, 719);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setVisible(true);
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -113,9 +110,6 @@ public class GUIView extends JFrame {
 		title.setBounds(271, 10, 210, 129);
 		contentPane.add(title);
 		
-		DefaultListModel<Pet> animalList = new DefaultListModel<Pet>(); 
-	    petList = new JList<Pet>(animalList);
-
 	}
 
 	public JTable getTable() {
@@ -172,11 +166,6 @@ public class GUIView extends JFrame {
 
 	public void setSortBox(JComboBox sortBox) {
 		this.sortBox = sortBox;
-	}
-	
-	public void adoptionTable()
-	{
-		
 	}
 	
 	
