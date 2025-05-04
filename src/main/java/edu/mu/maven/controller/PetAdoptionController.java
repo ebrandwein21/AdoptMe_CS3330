@@ -42,7 +42,9 @@ public class PetAdoptionController{
 		model = m;
 		view = v;
 	}
-	
+	/**
+	 * initView initializes the view GUI component so all pets are visible
+	 */
 	public void initView() {
 		view.setVisible(true);
 		for(int j = 1; j < petList.size(); j++) {
@@ -56,6 +58,10 @@ public class PetAdoptionController{
 		
 		}
 	
+	/**
+	 * initController initializes the controller and adds Action Listeners to each button,
+	 * allowing them to connect to their corresponding method. It also calls initView.
+	 */
 	public void initController() {
 		
 		
@@ -96,13 +102,17 @@ public class PetAdoptionController{
 		Collections.sort(combinedPetList); 
 		updateGuiTableForSorting();
 	}
-
+	
+	/**
+	 * view opens a new window with the details of the selected pet
+	 */
     public void view() {
 		petList = PetLoader.loadPets();
 		exoticPetList = ExoticAnimalJson.loadExoticAnimal();
 		combinedPetList = App.combineLoaders();
 		
 		if(view.getTable().getSelectedRow() != -1) {
+			System.out.println(exoticPetList.size());
 			int index = view.getTable().getSelectedRow();
 			DetailsView details = new DetailsView();
 			
@@ -133,16 +143,19 @@ public class PetAdoptionController{
 		ExoticAnimalJson.saveExotic(exoticPetList);
 		
 	}
-
-	private Object removePet() {
+	/**
+	 * removePet removes the pet the user has selected
+	 */
+	private void removePet() {
 		//Remove specific pet from list
 		if(view.getTable().getSelectedRow() != -1) {
 			view.getTableModel().removeRow(view.getTable().getSelectedRow());
 		}
-		return null;
 	}
-
-	private Object addPet() {
+	/**
+	 * addPet takes the information the user inputs into the text fields and adds a new pet with this information.
+	 */
+	private void addPet() {
 		//Add pet to list
 		//Prompt user with new window to enter pet's information
 		
@@ -155,10 +168,12 @@ public class PetAdoptionController{
 			int age = Integer.parseInt(newPet.getAgeField().getText());
 			ExoticAnimal pet = new ExoticAnimal(String.valueOf(exoticId), name, animal, species, age);
 			exoticPetList.add(pet);
-			view.getTable().setValueAt(pet.GetAnimalName(), (exoticPetList.size() + petList.size()) -1, 0);
-		});
-		return newPet;
-
+			DefaultTableModel model = (DefaultTableModel) view.getTable().getModel();
+			model.addRow(new Object[]{
+				pet.GetAnimalName()
+			});
+			System.out.println(exoticPetList.size());
+			});
 	}
 	
 	public void updateGuiTableForSorting()
@@ -173,9 +188,15 @@ public class PetAdoptionController{
 	}	
 
 	private void adoptPet() {
-		//Changes specific pet's information to "adopted" and removes ability to adopt this animal
-	}
-	public void initiate() {
-		view.setVisible(true);
+		int index = view.getTable().getSelectedRow();
+		if(index != -1) {
+			if(petList.get(index).GetAdopted() != true) {
+				petList.get(index).SetAdopted(true);
+			}
+			else {
+				view.getCannotAdopt().setText("Sorry this pet has already been adopted");
+			}
+
+		}
 	}
 }

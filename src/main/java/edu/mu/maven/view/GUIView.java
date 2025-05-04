@@ -7,18 +7,13 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import edu.mu.maven.Model.Pet;
-
-import javax.swing.JTextPane;
 import java.awt.Font;
 import javax.swing.JTable;
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-
 public class GUIView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -32,6 +27,7 @@ public class GUIView extends JFrame {
 	private JButton btnAdd;
 	private JComboBox sortBox;
 	private JLabel title;
+	private JLabel cannotAdopt;
 
 	/**
 	 * Launch the application.
@@ -62,7 +58,7 @@ public class GUIView extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		tableModel = new DefaultTableModel(20,1);
+		tableModel = new DefaultTableModel(7,1);
 		table = new JTable(tableModel);
 		table.setBounds(185, 120, 345, 552);
 		contentPane.add(table);
@@ -113,6 +109,18 @@ public class GUIView extends JFrame {
 		title.setBounds(271, 10, 210, 129);
 		contentPane.add(title);
 		
+		cannotAdopt = new JLabel("");
+		cannotAdopt.setBounds(586, 214, 45, 13);
+		contentPane.add(cannotAdopt);
+		
+	}
+
+	public JLabel getCannotAdopt() {
+		return cannotAdopt;
+	}
+
+	public void setCannotAdopt(JLabel cannotAdopt) {
+		this.cannotAdopt = cannotAdopt;
 	}
 
 	public DefaultTableModel getTableModel() {
