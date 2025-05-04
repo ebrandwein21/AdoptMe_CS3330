@@ -14,6 +14,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import javax.swing.table.DefaultTableModel;
+
 import com.google.gson.Gson;
 
 import edu.mu.maven.AdoptMeGroup23.ExoticAnimalJson;
@@ -27,6 +29,7 @@ public class PetAdoptionController{
 	private List<Pet> petList = new ArrayList<>();
 	private List<ExoticAnimal> exoticPetList = new ArrayList<>();
 	private Shelter<Pet> model;
+	private DefaultTableModel table;
 	private GUIView view;
 	
 	public PetAdoptionController(Shelter<Pet> m, GUIView v){
@@ -75,17 +78,17 @@ public class PetAdoptionController{
 	
 	private void speciesSort() {
 		Collections.sort(petList, new SpeciesComparator());
-		//feels like there is something we have to call to actually initiate view
+		updateGuiTableForSorting();
 	}
 
 	private void ageSort() {
 		Collections.sort(petList, new AgeComparator());
-		//feels like there is something we have to call to actually initiate view
+		updateGuiTableForSorting();
 	}
 
 	private void nameSort() {
 		Collections.sort(petList); 
-		//feels like there is something we have to call to actually initiate view			
+		updateGuiTableForSorting();
 	}
 
     public void view() {
@@ -126,6 +129,23 @@ public class PetAdoptionController{
 		return newPet;
 
 	}
+	
+	public void updateGuiTableForSorting()
+	{
+		table = view.getTableModel();
+		table.setRowCount(0);
+		
+		for(Pet pet : petList)
+		{
+			table.addRow(new Object[]{pet.GetName()});
+		}
+		
+		for(ExoticAnimal exoticPet : exoticPetList)
+		{
+			table.addRow(new Object[]{exoticPet.GetAnimalName()});
+		}
+	}
+		
 
 	private void adoptPet() {
 		//Changes specific pet's information to "adopted" and removes ability to adopt this animal
