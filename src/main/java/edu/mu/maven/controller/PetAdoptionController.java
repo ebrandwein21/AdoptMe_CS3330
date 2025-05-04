@@ -46,6 +46,9 @@ public class PetAdoptionController{
 		}
 	
 	public void initController() {
+		petList = PetLoader.loadPets();
+		exoticPetList = ExoticAnimalJson.loadExoticAnimal();
+		
 		view.getBtnAdopt().addActionListener(e -> adoptPet());
 		view.getBtnAdd().addActionListener(e -> addPet());
 		view.getBtnRemove().addActionListener(e -> removePet());
