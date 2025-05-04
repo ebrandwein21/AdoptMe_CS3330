@@ -159,7 +159,14 @@ public class PetAdoptionController{
 			String name = newPet.getNameField().getText();
 			String animal = newPet.getAnimalField().getText();
 			String species = newPet.getSpeciesField().getText();
-			int age = Integer.parseInt(newPet.getAgeField().getText());
+			String ageInput = newPet.getAgeField().getText();
+			Integer age = -1;
+			try {
+				age = Integer.parseInt(ageInput);
+			} catch (NumberFormatException e1) {
+
+				System.err.println("Input an integer");
+			}
 			ExoticAnimal pet = new ExoticAnimal(String.valueOf(exoticId), name, animal, species, age);
 			exoticPetList.add(pet);
 			DefaultTableModel model = (DefaultTableModel) view.getTable().getModel();
