@@ -44,6 +44,7 @@ public class PetAdoptionController{
 				view.getTable().setValueAt(exoticPetList.get(j).GetAnimalName(), i, 0);
 				j++;
 			}
+		
 		}
 	
 	public void initController() {
