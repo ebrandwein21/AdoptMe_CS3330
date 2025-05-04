@@ -24,9 +24,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 
-public class exoticAnimalJson
+public class ExoticAnimalJson
 {
-	public static void main(String[] args) {
+	public static List<ExoticAnimal> loadExoticAnimal()
+	{
 		
 	List<ExoticAnimal> exoticPetList = new ArrayList<>();
 	Gson gson = new Gson();
@@ -53,12 +54,14 @@ public class exoticAnimalJson
 		    exoticPet = gson.fromJson(exoticPetObject, ExoticAnimal.class);
 		    Pet exoticPetTransfer = new ExoticPetAdapter(exoticPet);
 		    exoticPetList.add(exoticPet);
-		    System.out.println("Added exotic pet: " + exoticPet.GetAnimalName());
+		    String details = "\nid: " + uniqueId+ "\nname: " + animalName + "\ntype: " + category + "\nspecies: " + subSpecies + "\nAge: " + yearsOld + "\nAdopted: " + false;
+		    System.out.println("\nPet info: " + details);
 		} 
 
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}   
+		}  
+	     return exoticPetList;
+	  }
 	}		
-}

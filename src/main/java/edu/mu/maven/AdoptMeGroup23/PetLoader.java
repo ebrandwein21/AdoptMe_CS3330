@@ -24,8 +24,8 @@ import com.google.gson.JsonObject;
 
 public class PetLoader
 {
-	    public static void main(String[] args) {
-
+	   public static List<Pet> loadPets()
+	   {
 	    Gson gson = new Gson();
         List<Pet> petList = new ArrayList<>();
       
@@ -53,31 +53,37 @@ public class PetLoader
 	    if(type.equals("Dog"))
 		{
             pet = gson.fromJson(petObject, Dog.class);
-			System.out.println("Pet added: " + pet.GetName());
+            String details = "\nid: " + pet.GetID() + "\nname: " + pet.GetName() + "\ntype: " + pet.GetType() + "\nspecies: " + pet.GetSpecies() + "\nAge: " + pet.GetAge() + "\nAdopted: " + pet.GetAdopted(); 
+			System.out.println("\nPet info: " + details);
 		}
 		
 	    else if(type.equals("Cat"))
 		{
 			pet = gson.fromJson(petObject, Cat.class);
-			System.out.println("Pet added: " + pet.GetName());
+			String details = "\nid: " + pet.GetID() + "\nname: " + pet.GetName() + "\ntype: " + pet.GetType() + "\nspecies: " + pet.GetSpecies() + "\nAge: " + pet.GetAge() + "\nAdopted: " + pet.GetAdopted(); 
+			System.out.println("\nPet info: " + details);
 		}
 	    else if(type.equals("Rabbit"))
 		{
 			pet = gson.fromJson(petObject, Rabbit.class);
-			System.out.println("Pet added: " + pet.GetName());
+			String details = "\nid: " + pet.GetID() + "\nname: " + pet.GetName() + "\ntype: " + pet.GetType() + "\nspecies: " + pet.GetSpecies() + "\nAge: " + pet.GetAge() + "\nAdopted: " + pet.GetAdopted(); 
+			System.out.println("\nPet info: " + details);
 		}else 
 		{
 			throw new IllegalArgumentException("Unknown pet type: " + type);	
 	    }
 	    
+	    
 		petList.add(pet);
         System.out.println("Added pet: " + pet.GetName());
-		
+       
 		}
 	} catch (FileNotFoundException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}   
+	 return petList;
+	   
   }
 	
 	

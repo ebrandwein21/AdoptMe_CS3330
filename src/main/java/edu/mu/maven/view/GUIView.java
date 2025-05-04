@@ -11,6 +11,7 @@ import edu.mu.maven.Model.Pet;
 import javax.swing.JTextPane;
 import java.awt.Font;
 import javax.swing.JTable;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -30,7 +31,7 @@ public class GUIView extends JFrame {
 	private JButton btnAdd;
 	private JComboBox sortBox;
 	private JLabel title;
-	private JList<Pet> petList;
+	private JList petList;
 
 	/**
 	 * Launch the application.
@@ -109,6 +110,9 @@ public class GUIView extends JFrame {
 		title.setFont(new Font("Tahoma", Font.PLAIN, 50));
 		title.setBounds(271, 10, 210, 129);
 		contentPane.add(title);
+		
+		DefaultListModel<Pet> animalList = new DefaultListModel<Pet>(); 
+	    petList = new JList<Pet>(animalList);
 
 	}
 
@@ -168,8 +172,5 @@ public class GUIView extends JFrame {
 		this.sortBox = sortBox;
 	}
 	
-	public Pet getSelectedPet()
-	{
-		return petList.getSelectedValue();
-	}
+	
 }

@@ -31,6 +31,8 @@ public class App {
     		public void run() {
     			PetAdoptionController controller = new PetAdoptionController(new Shelter<>(), new GUIView());
     	     	controller.initiate();
+    	     	controller.save();
+    	     	controller.view();
     	}
     });
     }

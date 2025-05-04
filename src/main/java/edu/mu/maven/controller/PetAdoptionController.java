@@ -15,12 +15,16 @@ import java.util.List;
 
 import com.google.gson.Gson;
 
+import edu.mu.maven.AdoptMeGroup23.ExoticAnimalJson;
+import edu.mu.maven.AdoptMeGroup23.PetLoader;
 import edu.mu.maven.Model.AgeComparator;
+import edu.mu.maven.Model.ExoticAnimal;
 import edu.mu.maven.Model.SpeciesComparator;
 
 public class PetAdoptionController{
 	
 	private List<Pet> petList = new ArrayList<>();
+	private List<ExoticAnimal> exoticPetList = new ArrayList<>();
 	private Shelter<Pet> model;
 	private GUIView view;
 	
@@ -68,13 +72,15 @@ public class PetAdoptionController{
 		//feels like there is something we have to call to actually initiate view			
 	}
 
-	private Object view() {
-		Pet viewPet = view.getSelectedPet();
-		return viewPet;
+	    public void view() {
+		petList = PetLoader.loadPets();
+		exoticPetList = ExoticAnimalJson.loadExoticAnimal();
+		
+		
 		
 	}
 
-	private void save() {
+	public void save() { //a file is saving, however, for now it is an empty list 
 				
 	    Gson gson = new Gson();
 				
