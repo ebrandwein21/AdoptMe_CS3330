@@ -10,6 +10,7 @@ import com.google.gson.JsonArray;
 import edu.mu.maven.Model.Cat;
 import edu.mu.maven.Model.Dog;
 import edu.mu.maven.Model.ExoticAnimal;
+import edu.mu.maven.Model.ExoticPetAdapter;
 import edu.mu.maven.Model.Pet;
 import edu.mu.maven.Model.Rabbit;
 
@@ -52,6 +53,7 @@ public class exoticAnimalJson
 		    
 		    ExoticAnimal exoticPet = null;
 		    exoticPet = gson.fromJson(exoticPetObject, ExoticAnimal.class);
+		    Pet exoticPetTransfer = new ExoticPetAdapter(exoticPet);
 		    
 		    exoticPetList.add(exoticPet);
 		    System.out.println("Added exotic pet: " + exoticPet.GetAnimalName());

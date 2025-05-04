@@ -2,6 +2,7 @@ package edu.mu.maven.controller;
 
 import edu.mu.maven.Model.Pet;
 import edu.mu.maven.view.GUIView;
+import edu.mu.maven.Model.AgeComparator;
 
 public class PetAdoptionController{
 	
