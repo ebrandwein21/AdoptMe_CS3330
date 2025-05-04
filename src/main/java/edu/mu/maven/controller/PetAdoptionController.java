@@ -32,10 +32,21 @@ public class PetAdoptionController{
 	public PetAdoptionController(Shelter<Pet> m, GUIView v){
 		model = m;
 		view = v;
-		this.initController();
 	}
 	
-	private void initController() {
+	public void initView() {
+		view.setVisible(true);
+		for(int j = 1; j < petList.size(); j++) {
+			view.getTable().setValueAt(petList.get(j-1).GetName(), j, 0);
+			}
+		int j = 0;
+		for(int i = petList.size(); i < (petList.size() + exoticPetList.size()); i++) {
+				view.getTable().setValueAt(exoticPetList.get(j).GetAnimalName(), i, 0);
+				j++;
+			}
+		}
+	
+	public void initController() {
 		view.getBtnAdopt().addActionListener(e -> adoptPet());
 		view.getBtnAdd().addActionListener(e -> addPet());
 		view.getBtnRemove().addActionListener(e -> removePet());
@@ -56,6 +67,7 @@ public class PetAdoptionController{
 		            break;
 		    }
 		});
+		initView();
 	}
 	
 	private void speciesSort() {
@@ -79,7 +91,6 @@ public class PetAdoptionController{
 	}
 
 	public void save() { //a file is saving, however, for now it is an empty list 
-				
 		PetLoader.savePets(petList);
 		ExoticAnimalJson.saveExotic(exoticPetList);
 	}

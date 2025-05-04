@@ -62,9 +62,10 @@ public class GUIView extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		table = new JTable();
+		table = new JTable(10,1);
 		table.setBounds(185, 120, 345, 552);
 		contentPane.add(table);
+		table.setValueAt("Name:", 0, 0);
 
 		btnAdopt = new JButton("Adopt");
 		btnAdopt.setFont(new Font("Tahoma", Font.PLAIN, 25));

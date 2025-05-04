@@ -31,7 +31,6 @@ public class App {
     public static void main(String[] args) {
     Gson gson = new Gson();
     List<Pet> petList = new ArrayList<>();
-	GUIView gui = new GUIView();
 	
 	try {
 		String directory = System.getProperty("user.dir");
@@ -85,9 +84,12 @@ public class App {
     		@Override
     		public void run() {
     			PetAdoptionController controller = new PetAdoptionController(new Shelter<>(), new GUIView());
-    	     	controller.initiate();
     	     	controller.save();
     	     	controller.view();
+    	     	controller.initController();
+
+    	     	
+    	     	
     	}
     });
     }
