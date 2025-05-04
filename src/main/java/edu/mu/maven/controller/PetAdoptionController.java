@@ -189,8 +189,8 @@ public class PetAdoptionController{
 	private void adoptPet() {
 		int index = view.getTable().getSelectedRow();
 		if(index != -1) {
-			if(petList.get(index).GetAdopted() != true) {
-				petList.get(index).SetAdopted(true);
+			if(combinedPetList.get(index).GetAdopted() != true) {
+				combinedPetList.get(index).SetAdopted(true);
 			}
 			else {
 				view.getCannotAdopt().setText("Sorry this pet has already been adopted");
