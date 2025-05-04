@@ -29,15 +29,17 @@ import com.google.gson.JsonObject;
 
 public class App {
     public static void main(String[] args) {
-
     	SwingUtilities.invokeLater(new Runnable() {
     		@Override
     		public void run() {
     			GUIView view = new GUIView();
     			PetAdoptionController controller = new PetAdoptionController(new Shelter<>(), new GUIView());
-    	     	controller.initiate();
     	     	controller.save();
     	     	controller.view();
+    	     	controller.initController();
+
+    	     	
+    	     	
     	}
     });
     }
