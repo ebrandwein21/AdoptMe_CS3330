@@ -7,18 +7,13 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import edu.mu.maven.Model.Pet;
-
-import javax.swing.JTextPane;
 import java.awt.Font;
 import javax.swing.JTable;
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import edu.mu.maven.Model.Pet;
 public class GUIView extends JFrame {
 
 	private static final long serialVersionUID = 1L;

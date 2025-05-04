@@ -37,7 +37,9 @@ public class PetAdoptionController{
 		model = m;
 		view = v;
 	}
-	
+	/**
+	 * initView initializes the view GUI component so all pets are visible
+	 */
 	public void initView() {
 		view.setVisible(true);
 		for(int j = 1; j < petList.size(); j++) {
@@ -51,6 +53,10 @@ public class PetAdoptionController{
 		
 		}
 	
+	/**
+	 * initController initializes the controller and adds Action Listeners to each button,
+	 * allowing them to connect to their corresponding method. It also calls initView.
+	 */
 	public void initController() {
 		
 		
@@ -91,7 +97,10 @@ public class PetAdoptionController{
 		Collections.sort(petList); 
 		updateGuiTableForSorting();
 	}
-
+	
+	/**
+	 * view opens a new window with the details of the selected pet
+	 */
     public void view() {
 		petList = PetLoader.loadPets();
 		exoticPetList = ExoticAnimalJson.loadExoticAnimal();
@@ -128,16 +137,19 @@ public class PetAdoptionController{
 		ExoticAnimalJson.saveExotic(exoticPetList);
 		
 	}
-
-	private Object removePet() {
+	/**
+	 * removePet removes the pet the user has selected
+	 */
+	private void removePet() {
 		//Remove specific pet from list
 		if(view.getTable().getSelectedRow() != -1) {
 			view.getTableModel().removeRow(view.getTable().getSelectedRow());
 		}
-		return null;
 	}
-
-	private Object addPet() {
+	/**
+	 * addPet takes the information the user inputs into the text fields and adds a new pet with this information.
+	 */
+	private void addPet() {
 		//Add pet to list
 		//Prompt user with new window to enter pet's information
 		
@@ -154,11 +166,8 @@ public class PetAdoptionController{
 			model.addRow(new Object[]{
 				pet.GetAnimalName()
 			});
-//			view.getTable().setValueAt(pet.GetAnimalName(), (exoticPetList.size() + petList.size()) -1, 0);
 			System.out.println(exoticPetList.size());
 			});
-		return newPet;
-
 	}
 	
 	public void updateGuiTableForSorting()
@@ -177,9 +186,10 @@ public class PetAdoptionController{
 		}
 	}
 		
-
+	/**
+	 * adoptPet changes a specific pet's information to "adopted" and removes the ability to adopt this animal
+	 */
 	private void adoptPet() {
-		//Changes specific pet's information to "adopted" and removes ability to adopt this animal
 		int index = view.getTable().getSelectedRow();
 		if(index != -1) {
 			if(petList.get(index).GetAdopted() != true) {
@@ -190,8 +200,5 @@ public class PetAdoptionController{
 			}
 
 		}
-	}
-	public void initiate() {
-		view.setVisible(true);
 	}
 }
