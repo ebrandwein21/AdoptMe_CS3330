@@ -72,34 +72,15 @@ public class PetAdoptionController{
 		//feels like there is something we have to call to actually initiate view			
 	}
 
-	    public void view() {
+    public void view() {
 		petList = PetLoader.loadPets();
-		exoticPetList = ExoticAnimalJson.loadExoticAnimal();
-		
-		
-		
+		exoticPetList = ExoticAnimalJson.loadExoticAnimal();	
 	}
 
 	public void save() { //a file is saving, however, for now it is an empty list 
 				
-	    Gson gson = new Gson();
-				
-		SimpleDateFormat currentTime = new SimpleDateFormat("yyyyMMdd_HHmmss"); 
-		String timeStamp = currentTime.format(new Date());
-		String fileName = timeStamp + "_pets.json";	
-		String directory = System.getProperty("user.dir");
-		String filePath =  directory  + File.separator + "src" + File.separator + "main"
-				+ File.separator + "java" + File.separator + "resources" + File.separator +
-				fileName;
-		
-		try(FileWriter timeStampedFile = new FileWriter(filePath))		
-		{
-			gson.toJson(petList, timeStampedFile);
-            System.out.println("Pets saved to " + filePath);
-		}catch(IOException e)
-		{
-            System.err.println("Failed to save pets: " + e.getMessage());
-		}
+		PetLoader.savePets(petList);
+		ExoticAnimalJson.saveExotic(exoticPetList);
 	}
 
 	private Object removePet() {
