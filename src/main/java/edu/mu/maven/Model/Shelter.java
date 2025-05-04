@@ -19,7 +19,5 @@ public class Shelter<T extends Pet>{
 	public void deletePet(T pet)
 	{
 		petList.remove(pet);
-	}
-		
+	}	
 }
-

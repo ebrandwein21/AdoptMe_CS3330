@@ -26,8 +26,8 @@ public class PetLoader
 {
 	    public static void main(String[] args) {
 
-	Gson gson = new Gson();
-    List<Pet> petList = new ArrayList<>();
+	    Gson gson = new Gson();
+        List<Pet> petList = new ArrayList<>();
       
 	try {
 		String directory = System.getProperty("user.dir");
@@ -78,5 +78,7 @@ public class PetLoader
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}   
-   }
   }
+	
+	
+}

@@ -26,9 +26,8 @@ import com.google.gson.JsonObject;
 
 public class exoticAnimalJson
 {
-	
 	public static void main(String[] args) {
-
+		
 	List<ExoticAnimal> exoticPetList = new ArrayList<>();
 	Gson gson = new Gson();
 	
@@ -50,11 +49,9 @@ public class exoticAnimalJson
 		    String category = exoticPetObject.get("category").getAsString();
 		    String subSpecies = exoticPetObject.get("subSpecies").getAsString();
 		    int yearsOld = exoticPetObject.get("yearsOld").getAsInt();
-		    
 		    ExoticAnimal exoticPet = null;
 		    exoticPet = gson.fromJson(exoticPetObject, ExoticAnimal.class);
 		    Pet exoticPetTransfer = new ExoticPetAdapter(exoticPet);
-		    
 		    exoticPetList.add(exoticPet);
 		    System.out.println("Added exotic pet: " + exoticPet.GetAnimalName());
 		} 

@@ -81,5 +81,4 @@ public abstract class Pet implements Comparable<Pet> {
     	return this.name.compareTo(pet.GetName());
     	
     }
-   
 }

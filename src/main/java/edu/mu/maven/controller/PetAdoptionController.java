@@ -4,9 +4,16 @@ import edu.mu.maven.Model.Pet;
 import edu.mu.maven.Model.Shelter;
 import edu.mu.maven.view.GUIView;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+
+import com.google.gson.Gson;
 
 import edu.mu.maven.Model.AgeComparator;
 import edu.mu.maven.Model.SpeciesComparator;
@@ -48,7 +55,6 @@ public class PetAdoptionController{
 	private void speciesSort() {
 		Collections.sort(petList, new SpeciesComparator());
 		//feels like there is something we have to call to actually initiate view
-
 	}
 
 	private void ageSort() {
@@ -58,20 +64,35 @@ public class PetAdoptionController{
 
 	private void nameSort() {
 		Collections.sort(petList); 
-		//feels like there is something we have to call to actually initiate view
-				
+		//feels like there is something we have to call to actually initiate view			
 	}
 
 	private Object view() {
-		// TODO Auto-generated method stub
-		//Open a window with the selected pet's information
-		return null;
+		Pet viewPet = view.getSelectedPet();
+		return viewPet;
+		
 	}
 
-	private Object save() {
-		// TODO Auto-generated method stub
-		//Update pets.json / exotic_animals.json to reflect GUI list
-		return null;
+	private void save() {
+				
+	    Gson gson = new Gson();
+				
+		SimpleDateFormat currentTime = new SimpleDateFormat("yyyyMMdd_HHmmss"); 
+		String timeStamp = currentTime.format(new Date());
+		String fileName = timeStamp + "_pets.json";	
+		String directory = System.getProperty("user.dir");
+		String filePath =  directory  + File.separator + "src" + File.separator + "main"
+				+ File.separator + "java" + File.separator + "resources" + File.separator +
+				fileName;
+		
+		try(FileWriter timeStampedFile = new FileWriter(filePath))		
+		{
+			gson.toJson(petList, timeStampedFile);
+            System.out.println("Pets saved to " + filePath);
+		}catch(IOException e)
+		{
+            System.err.println("Failed to save pets: " + e.getMessage());
+		}
 	}
 
 	private Object removePet() {
