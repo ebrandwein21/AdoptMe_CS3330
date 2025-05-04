@@ -139,8 +139,7 @@ public class PetAdoptionController{
 	}
 
 	public void save() { //a file is saving, however, for now it is an empty list 
-		PetLoader.savePets(petList);
-		ExoticAnimalJson.saveExotic(exoticPetList);
+		App.savedCombinedLoaders(combinedPetList);
 		
 	}
 	/**

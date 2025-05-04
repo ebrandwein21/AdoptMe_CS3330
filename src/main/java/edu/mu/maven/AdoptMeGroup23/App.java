@@ -3,6 +3,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -20,9 +22,11 @@ import edu.mu.maven.controller.PetAdoptionController;
 import edu.mu.maven.view.GUIView;
 import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.SwingUtilities;
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
 import java.io.IOException;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonElement;
@@ -38,10 +42,7 @@ public class App {
     			PetAdoptionController controller = new PetAdoptionController(new Shelter<>(), new GUIView());
     	     	controller.save();
     	     	controller.view();
-    	     	controller.initController();
-
-    	     	
-    	     	
+    	     	controller.initController();	     	
     	}
     });
     }
@@ -58,10 +59,34 @@ public class App {
     		    Pet exoticPetTransfer = new ExoticPetAdapter(exoticPet);
     		    combinedPetList.add(exoticPetTransfer);
     		}
-    	
-     }
+    	}
     			return combinedPetList;
     	
-   }
+    }
+    
+    public static void savedCombinedLoaders(List<Pet> combineLoaders)
+    {
+    	
+   	 {
+   		 Gson gson = new Gson();
+   		 
+   		 SimpleDateFormat currentTime = new SimpleDateFormat("yyyyMMdd_HHmmss"); 
+   			String timeStamp = currentTime.format(new Date());
+   			String fileName = timeStamp + "_pets.json";	
+   			String directory = System.getProperty("user.dir");
+   			String filePath =  directory  + File.separator + "src" + File.separator + "main"
+   					+ File.separator + "java" + File.separator + "resources" + File.separator +
+   					fileName;
+   			
+   			try(FileWriter timeStampedFile = new FileWriter(filePath))		
+   			{
+   				gson.toJson(combineLoaders, timeStampedFile);
+   	            System.out.println("Pets saved to " + filePath);
+   			}catch(IOException e)
+   			{
+   	            System.err.println("Failed to save pets: " + e.getMessage());
+   			}
+   		}
+    }
     
 }
