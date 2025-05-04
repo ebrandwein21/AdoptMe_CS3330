@@ -101,19 +101,20 @@ public class PetAdoptionController{
 	}
 
 	private Object removePet() {
-		// TODO Auto-generated method stub
 		//Remove specific pet from list
+		if(view.getTable().getSelectedRow() != -1) {
+			view.getTableModel().removeRow(view.getTable().getSelectedRow());
+		}
 		return null;
 	}
 
 	private Object addPet() {
-		// TODO Auto-generated method stub
 		//Add pet to list
 		//Prompt user with new window to enter pet's information
 		
 		AddPetView newPet = new AddPetView();
 		newPet.getAddPetBtn().addActionListener(e -> {
-			int exoticId = 7;
+			int exoticId = petList.get((petList.size() - 1)).GetID() + 1;
 			String name = newPet.getNameField().getText();
 			String animal = newPet.getAnimalField().getText();
 			String species = newPet.getSpeciesField().getText();

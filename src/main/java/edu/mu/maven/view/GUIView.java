@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import edu.mu.maven.Model.Pet;
 
@@ -23,6 +24,7 @@ public class GUIView extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTable table;
+	private DefaultTableModel tableModel;
 	private JButton btnSave;
 	private JButton btnAdopt;
 	private JButton btnRemove;
@@ -59,8 +61,9 @@ public class GUIView extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-
-		table = new JTable(20,1);
+		
+		tableModel = new DefaultTableModel(20,1);
+		table = new JTable(tableModel);
 		table.setBounds(185, 120, 345, 552);
 		contentPane.add(table);
 		table.setValueAt("Name:", 0, 0);
@@ -110,6 +113,14 @@ public class GUIView extends JFrame {
 		title.setBounds(271, 10, 210, 129);
 		contentPane.add(title);
 		
+	}
+
+	public DefaultTableModel getTableModel() {
+		return tableModel;
+	}
+
+	public void setTableModel(DefaultTableModel tableModel) {
+		this.tableModel = tableModel;
 	}
 
 	public JTable getTable() {
