@@ -108,6 +108,16 @@ public class PetAdoptionController{
 		//Prompt user with new window to enter pet's information
 		
 		AddPetView newPet = new AddPetView();
+		newPet.getAddPetBtn().addActionListener(e -> {
+			int exoticId = 7;
+			String name = newPet.getNameField().getText();
+			String animal = newPet.getAnimalField().getText();
+			String species = newPet.getSpeciesField().getText();
+			int age = Integer.parseInt(newPet.getAgeField().getText());
+			ExoticAnimal pet = new ExoticAnimal(String.valueOf(exoticId), name, animal, species, age);
+			exoticPetList.add(pet);
+			view.getTable().setValueAt(pet.GetAnimalName(), (exoticPetList.size() + petList.size()) -1, 0);
+		});
 		return newPet;
 	}
 

@@ -8,19 +8,21 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
+import javax.swing.JButton;
 
 public class AddPetView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textField;
-	private JLabel lblNewLabel_1;
-	private JLabel lblNewLabel_2;
-	private JTextField textField_1;
-	private JLabel lblNewLabel_3;
-	private JTextField textField_2;
-	private JLabel lblNewLabel_4;
-	private JTextField textField_3;
+	private JTextField nameField;
+	private JLabel nameLabel;
+	private JLabel animalLabel;
+	private JTextField animalField;
+	private JLabel speciesLabel;
+	private JTextField speciesField;
+	private JLabel ageLabel;
+	private JTextField ageField;
+	private JButton addPetBtn;
 
 	/**
 	 * Launch the application.
@@ -51,49 +53,96 @@ public class AddPetView extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Hi! Tell me about the animal you'd like to input");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		lblNewLabel.setBounds(21, 0, 665, 98);
-		contentPane.add(lblNewLabel);
+		JLabel Header = new JLabel("Hi! Tell me about the animal you'd like to add");
+		Header.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		Header.setBounds(21, 0, 665, 98);
+		contentPane.add(Header);
 		
-		textField = new JTextField();
-		textField.setBounds(296, 93, 268, 34);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		nameField = new JTextField();
+		nameField.setBounds(296, 93, 268, 34);
+		contentPane.add(nameField);
+		nameField.setColumns(10);
 		
-		lblNewLabel_1 = new JLabel("What's their name?");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblNewLabel_1.setBounds(31, 95, 204, 20);
-		contentPane.add(lblNewLabel_1);
+		nameLabel = new JLabel("What's their name?");
+		nameLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		nameLabel.setBounds(31, 95, 204, 20);
+		contentPane.add(nameLabel);
 		
-		lblNewLabel_2 = new JLabel("What type of animal is it?");
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblNewLabel_2.setBounds(31, 179, 255, 32);
-		contentPane.add(lblNewLabel_2);
+		animalLabel = new JLabel("What type of animal is it?");
+		animalLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		animalLabel.setBounds(31, 179, 255, 32);
+		contentPane.add(animalLabel);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(296, 177, 268, 34);
-		contentPane.add(textField_1);
-		textField_1.setColumns(10);
+		animalField = new JTextField();
+		animalField.setBounds(296, 177, 268, 34);
+		contentPane.add(animalField);
+		animalField.setColumns(10);
 		
-		lblNewLabel_3 = new JLabel("What species is it?");
-		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblNewLabel_3.setBounds(31, 275, 255, 32);
-		contentPane.add(lblNewLabel_3);
+		speciesLabel = new JLabel("What species is it?");
+		speciesLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		speciesLabel.setBounds(31, 275, 255, 32);
+		contentPane.add(speciesLabel);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(296, 273, 268, 34);
-		contentPane.add(textField_2);
+		speciesField = new JTextField();
+		speciesField.setColumns(10);
+		speciesField.setBounds(296, 273, 268, 34);
+		contentPane.add(speciesField);
 		
-		lblNewLabel_4 = new JLabel("How old are they?");
-		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblNewLabel_4.setBounds(31, 378, 255, 32);
-		contentPane.add(lblNewLabel_4);
+		ageLabel = new JLabel("How old are they?");
+		ageLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		ageLabel.setBounds(31, 378, 255, 32);
+		contentPane.add(ageLabel);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(296, 376, 268, 34);
-		contentPane.add(textField_3);
+		ageField = new JTextField();
+		ageField.setColumns(10);
+		ageField.setBounds(296, 376, 268, 34);
+		contentPane.add(ageField);
+		
+		addPetBtn = new JButton("Add Pet");
+		addPetBtn.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		addPetBtn.setBounds(423, 420, 153, 33);
+		contentPane.add(addPetBtn);
 	}
+
+	public JTextField getNameField() {
+		return nameField;
+	}
+
+	public void setNameField(JTextField nameField) {
+		this.nameField = nameField;
+	}
+
+	public JTextField getAnimalField() {
+		return animalField;
+	}
+
+	public void setAnimalField(JTextField animalField) {
+		this.animalField = animalField;
+	}
+
+	public JTextField getSpeciesField() {
+		return speciesField;
+	}
+
+	public void setSpeciesField(JTextField speciesField) {
+		this.speciesField = speciesField;
+	}
+
+	public JTextField getAgeField() {
+		return ageField;
+	}
+
+	public void setAgeField(JTextField ageField) {
+		this.ageField = ageField;
+	}
+
+	public JButton getAddPetBtn() {
+		return addPetBtn;
+	}
+
+	public void setAddPetBtn(JButton addPetBtn) {
+		this.addPetBtn = addPetBtn;
+	}
+	
+	
 }

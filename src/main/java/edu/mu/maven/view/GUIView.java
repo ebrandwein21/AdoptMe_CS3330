@@ -63,7 +63,7 @@ public class GUIView extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		table = new JTable(10,1);
+		table = new JTable(20,1);
 		table.setBounds(185, 120, 345, 552);
 		contentPane.add(table);
 		table.setValueAt("Name:", 0, 0);

@@ -2,13 +2,18 @@ package edu.mu.maven.Model;
 
 public class ExoticAnimal {
      protected String uniqueId, animalName, category, subSpecies;
-     protected int yearsOld;
-     String newID = uniqueId.replaceAll("[^0-9]", "");
- 	 int exoticId = Integer.parseInt(newID); 
+     protected int yearsOld, exoticId;
      
-     public ExoticAnimal(int exoticId, String animalName, String category, String subSpecies, int yearsOld)
+     
+     public ExoticAnimal(String uniqueId, String animalName, String category, String subSpecies, int yearsOld)
      {
-    	 this.exoticId = exoticId;
+    	 if(uniqueId != null) {
+    		 String newID = uniqueId.replaceAll("[^0-9]", "");
+    	 	 this.exoticId = Integer.parseInt(newID); 
+    	 }
+    	 else {
+    		 this.exoticId = Integer.parseInt(uniqueId);
+    	 }
     	 this.animalName = animalName;
     	 this.category = category;
     	 this.subSpecies = subSpecies;
