@@ -1,6 +1,7 @@
 package edu.mu.maven.controller;
 
 import edu.mu.maven.Model.Pet;
+import edu.mu.maven.view.AddPetView;
 import edu.mu.maven.Model.Shelter;
 import edu.mu.maven.view.GUIView;
 
@@ -91,7 +92,12 @@ public class PetAdoptionController{
 	}
 
 	private Object addPet() {
-	   return null;
+		// TODO Auto-generated method stub
+		//Add pet to list
+		//Prompt user with new window to enter pet's information
+		
+		AddPetView newPet = new AddPetView();
+		return newPet;
 	}
 
 	private void adoptPet() {
