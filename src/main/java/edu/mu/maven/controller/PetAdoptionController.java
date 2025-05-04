@@ -1,7 +1,6 @@
 package edu.mu.maven.controller;
 
 import edu.mu.maven.Model.Pet;
-import edu.mu.maven.view.AddPetView;
 import edu.mu.maven.Model.Shelter;
 import edu.mu.maven.view.GUIView;
 
@@ -83,6 +82,7 @@ public class PetAdoptionController{
 				
 		PetLoader.savePets(petList);
 		ExoticAnimalJson.saveExotic(exoticPetList);
+		
 	}
 
 	private Object removePet() {
@@ -96,8 +96,7 @@ public class PetAdoptionController{
 		//Add pet to list
 		//Prompt user with new window to enter pet's information
 		
-		AddPetView newPet = new AddPetView();
-		return newPet;
+		return null;
 	}
 
 	private void adoptPet() {
