@@ -3,6 +3,7 @@ package edu.mu.maven.controller;
 import edu.mu.maven.Model.Pet;
 import edu.mu.maven.Model.Shelter;
 import edu.mu.maven.view.AddPetView;
+import edu.mu.maven.view.DetailsView;
 import edu.mu.maven.view.GUIView;
 
 import java.io.File;
@@ -40,7 +41,7 @@ public class PetAdoptionController{
 	public void initView() {
 		view.setVisible(true);
 		for(int j = 1; j < petList.size(); j++) {
-			view.getTable().setValueAt(petList.get(j-1).GetName(), j, 0);
+			view.getTable().setValueAt(petList.get(j).GetName(), j, 0);
 			}
 		int j = 0;
 		for(int i = petList.size(); i < (petList.size() + exoticPetList.size()); i++) {
@@ -94,6 +95,30 @@ public class PetAdoptionController{
     public void view() {
 		petList = PetLoader.loadPets();
 		exoticPetList = ExoticAnimalJson.loadExoticAnimal();
+		
+		if(view.getTable().getSelectedRow() != -1) {
+			int index = view.getTable().getSelectedRow();
+			DetailsView details = new DetailsView();
+			
+			if(index < petList.size()) {
+				details.getPetName().setText(petList.get(index).GetName());
+				details.getPetType().setText(petList.get(index).GetType());
+				details.getPetSpecies().setText(petList.get(index).GetSpecies());
+				details.getPetAge().setText(String.valueOf(petList.get(index).GetAge()));
+				details.getPetAdopted().setText(String.valueOf(petList.get(index).GetName()));
+				details.getPetId().setText(String.valueOf(petList.get(index).GetID()));
+			}
+			else if(index >= petList.size()) {
+				index = index - petList.size();
+				details.getPetName().setText(exoticPetList.get(index).GetAnimalName());
+				details.getPetType().setText(exoticPetList.get(index).GetCategory());
+				details.getPetSpecies().setText(exoticPetList.get(index).GetSubSpecies());
+				details.getPetAge().setText(String.valueOf(exoticPetList.get(index).GetYearsOld()));
+				details.getPetAdopted().setText(String.valueOf(exoticPetList.get(index).isAdopted()));
+				details.getPetId().setText(String.valueOf(exoticPetList.get(index).GetUniqueId()));
+			}
+			details.setVisible(true);  
+		}
 		//method to be called to populate table 
 	}
 

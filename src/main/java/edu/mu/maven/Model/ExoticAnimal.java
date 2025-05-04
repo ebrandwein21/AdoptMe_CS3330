@@ -3,9 +3,9 @@ package edu.mu.maven.Model;
 public class ExoticAnimal {
      protected String uniqueId, animalName, category, subSpecies;
      protected int yearsOld, exoticId;
-     
-     
-     public ExoticAnimal(String uniqueId, String animalName, String category, String subSpecies, int yearsOld)
+     boolean adopted = false;
+
+	public ExoticAnimal(String uniqueId, String animalName, String category, String subSpecies, int yearsOld)
      {
     	 if(uniqueId != null) {
     		 String newID = uniqueId.replaceAll("[^0-9]", "");
@@ -20,6 +20,14 @@ public class ExoticAnimal {
     	 this.yearsOld = yearsOld;
      }
      
+	public boolean isAdopted() {
+		return adopted;
+	}
+
+	public void setAdopted(boolean adopted) {
+		this.adopted = adopted;
+	}
+	
      public int GetUniqueId()
      {
     	   
