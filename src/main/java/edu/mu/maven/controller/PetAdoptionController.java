@@ -15,6 +15,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import javax.swing.table.DefaultTableModel;
+
 import com.google.gson.Gson;
 
 import edu.mu.maven.AdoptMeGroup23.ExoticAnimalJson;
@@ -94,6 +96,7 @@ public class PetAdoptionController{
 		exoticPetList = ExoticAnimalJson.loadExoticAnimal();
 		
 		if(view.getTable().getSelectedRow() != -1) {
+			System.out.println(exoticPetList.size());
 			int index = view.getTable().getSelectedRow();
 			DetailsView details = new DetailsView();
 			
@@ -146,8 +149,13 @@ public class PetAdoptionController{
 			int age = Integer.parseInt(newPet.getAgeField().getText());
 			ExoticAnimal pet = new ExoticAnimal(String.valueOf(exoticId), name, animal, species, age);
 			exoticPetList.add(pet);
-			view.getTable().setValueAt(pet.GetAnimalName(), (exoticPetList.size() + petList.size()) -1, 0);
-		});
+			DefaultTableModel model = (DefaultTableModel) view.getTable().getModel();
+			model.addRow(new Object[]{
+				pet.GetAnimalName()
+			});
+//			view.getTable().setValueAt(pet.GetAnimalName(), (exoticPetList.size() + petList.size()) -1, 0);
+			System.out.println(exoticPetList.size());
+			});
 		return newPet;
 
 	}

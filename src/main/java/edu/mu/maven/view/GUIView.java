@@ -18,7 +18,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-
+import edu.mu.maven.Model.Pet;
 public class GUIView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -62,7 +62,7 @@ public class GUIView extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		tableModel = new DefaultTableModel(20,1);
+		tableModel = new DefaultTableModel(7,1);
 		table = new JTable(tableModel);
 		table.setBounds(185, 120, 345, 552);
 		contentPane.add(table);
