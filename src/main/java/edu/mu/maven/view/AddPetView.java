@@ -23,6 +23,7 @@ public class AddPetView extends JFrame {
 	private JLabel ageLabel;
 	private JTextField ageField;
 	private JButton addPetBtn;
+	private JLabel addMessage;
 
 	/**
 	 * Launch the application.
@@ -102,6 +103,10 @@ public class AddPetView extends JFrame {
 		addPetBtn.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		addPetBtn.setBounds(423, 420, 153, 33);
 		contentPane.add(addPetBtn);
+		
+		addMessage = new JLabel("");
+		addMessage.setBounds(274, 420, 139, 33);
+		contentPane.add(addMessage);
 	}
 
 	public JTextField getNameField() {
@@ -143,6 +148,11 @@ public class AddPetView extends JFrame {
 	public void setAddPetBtn(JButton addPetBtn) {
 		this.addPetBtn = addPetBtn;
 	}
-	
-	
+	public JLabel getAddMessage() {
+		return addMessage;
+	}
+
+	public void setAddMessage(JLabel addMessage) {
+		this.addMessage = addMessage;
+	}
 }
