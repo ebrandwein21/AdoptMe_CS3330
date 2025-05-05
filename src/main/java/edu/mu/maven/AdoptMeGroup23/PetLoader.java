@@ -29,6 +29,12 @@ import com.google.gson.JsonObject;
 
 public class PetLoader
 {
+	/**
+	 * loads a list of pets from the pets.json file located in the resources folder of our program, parses and deserializes a group of pet objects
+	 * loops through a pet field in pet array and assigns the fromJson object based on the pet type, an illegal arg exception is thrown if the type is unknown
+	 * the pets are then added to a petlist and a file not found exception is called if the file is not valid
+	 * @return the list of pets the object is stored in
+	 */
 	   public static List<Pet> loadPets()
 	   {
 	    Gson gson = new Gson();
@@ -58,57 +64,27 @@ public class PetLoader
 	    if(type.equals("Dog"))
 		{
             pet = gson.fromJson(petObject, Dog.class);
-            String details = "\nid: " + pet.GetID() + "\nname: " + pet.GetName() + "\ntype: " + pet.GetType() + "\nspecies: " + pet.GetSpecies() + "\nAge: " + pet.GetAge() + "\nAdopted: " + pet.GetAdopted(); 
-			System.out.println("\nPet info: " + details);
 		}
 		
 	    else if(type.equals("Cat"))
 		{
 			pet = gson.fromJson(petObject, Cat.class);
-			String details = "\nid: " + pet.GetID() + "\nname: " + pet.GetName() + "\ntype: " + pet.GetType() + "\nspecies: " + pet.GetSpecies() + "\nAge: " + pet.GetAge() + "\nAdopted: " + pet.GetAdopted(); 
 		}
 	    else if(type.equals("Rabbit"))
 		{
-			pet = gson.fromJson(petObject, Rabbit.class);
-			String details = "\nid: " + pet.GetID() + "\nname: " + pet.GetName() + "\ntype: " + pet.GetType() + "\nspecies: " + pet.GetSpecies() + "\nAge: " + pet.GetAge() + "\nAdopted: " + pet.GetAdopted(); 
-			
+			pet = gson.fromJson(petObject, Rabbit.class);			
 		}else 
 		{
 			throw new IllegalArgumentException("Unknown pet type: " + type);	
 	    }
-	    
-	    
+	   
 		petList.add(pet);
-       
-		}
-	} catch (FileNotFoundException e) {
-		// TODO Auto-generated catch block
+		}	
+	} 
+	catch (FileNotFoundException e) 
+	{
 		e.printStackTrace();
 	}   
 	 return petList;
-	   
   }
-	   public static void savePets(List<Pet> petList)
-		{
-	    Gson gson = new Gson();
-		
-		SimpleDateFormat currentTime = new SimpleDateFormat("yyyyMMdd_HHmmss"); 
-		String timeStamp = currentTime.format(new Date());
-		String fileName = timeStamp + "_pets.json";	
-		String directory = System.getProperty("user.dir");
-		String filePath =  directory  + File.separator + "src" + File.separator + "main"
-				+ File.separator + "java" + File.separator + "resources" + File.separator +
-				fileName;
-		
-		try(FileWriter timeStampedFile = new FileWriter(filePath))		
-		{
-			gson.toJson(petList, timeStampedFile);
-           System.out.println("Pets saved to " + filePath);
-		}catch(IOException e)
-		{
-           System.err.println("Failed to save pets: " + e.getMessage());
-		}
-	}
-	
-	
 }

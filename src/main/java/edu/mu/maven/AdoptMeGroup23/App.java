@@ -45,7 +45,7 @@ public class App {
     	     	controller.initController();	     	
     	}
     });
-    }
+  }
     
     /**
      * this method combines the two pet loaders, ExoticAnimaljson and the petloader into one common list
@@ -61,36 +61,33 @@ public class App {
     	List<Pet> petList = PetLoader.loadPets();
     	combinedPetList.addAll(petList);
     	List<ExoticAnimal> exoticAnimalList = ExoticAnimalJson.loadExoticAnimal();
-    			{
+    		{
     		for(ExoticAnimal exoticPet : exoticAnimalList)
     		{
     		    Pet exoticPetTransfer = new ExoticPetAdapter(exoticPet);
-    		    combinedPetList.add(exoticPetTransfer);
-    		    
+    		    combinedPetList.add(exoticPetTransfer);  
     		}
     	}
-    			return combinedPetList;
-    	
+    		return combinedPetList;	
     }
     
     /**
-     * 
-     * @param combineLoaders
+     * this method initiates a new file with the current date/month and time of the pets list by writing to a file path in the resource folder
+     * @param combineLoaders - the list of pet objects to be saved
      */
     
     public static void savedCombinedLoaders(List<Pet> combineLoaders)
     {
-    	
-   	 {
+   	  {
    		 Gson gson = new Gson();
    		 
    		 SimpleDateFormat currentTime = new SimpleDateFormat("yyyyMMdd_HHmmss"); 
-   			String timeStamp = currentTime.format(new Date());
-   			String fileName = timeStamp + "_pets.json";	
-   			String directory = System.getProperty("user.dir");
-   			String filePath =  directory  + File.separator + "src" + File.separator + "main"
-   					+ File.separator + "java" + File.separator + "resources" + File.separator +
-   					fileName;
+   	     String timeStamp = currentTime.format(new Date());
+   	     String fileName = timeStamp + "_pets.json";	
+   		 String directory = System.getProperty("user.dir");
+   		 String filePath =  directory  + File.separator + "src" + File.separator + "main"
+   				+ File.separator + "java" + File.separator + "resources" + File.separator +
+   				fileName;
    			
    			try(FileWriter timeStampedFile = new FileWriter(filePath))		
    			{
@@ -101,6 +98,5 @@ public class App {
    	            System.err.println("Failed to save pets: " + e.getMessage());
    			}
    		}
-    }
-    
+    } 
 }

@@ -30,6 +30,10 @@ import com.google.gson.JsonObject;
 
 public class ExoticAnimalJson
 {
+	/**
+	 * loads exotic animals from the exotic animal json file, the exotic animals are then deserialized and loaded into a list
+	 * @return the exotic animal objects in the list
+	 */
 	public static List<ExoticAnimal> loadExoticAnimal()
 	{
 		
@@ -58,36 +62,13 @@ public class ExoticAnimalJson
 		    exoticPet = gson.fromJson(exoticPetObject, ExoticAnimal.class);
 		    Pet exoticPetTransfer = new ExoticPetAdapter(exoticPet);
 		    exoticPetList.add(exoticPet);
-		    String details = "\nid: " + uniqueId+ "\nname: " + animalName + "\ntype: " + category + "\nspecies: " + subSpecies + "\nAge: " + yearsOld + "\nAdopted: " + false;
-		    System.out.println("\nPet info: " + details);
 		} 
 
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}  
 	     return exoticPetList;
-	  }
-	 public static void saveExotic(List<ExoticAnimal> exoticPetList)
-	 {
-		 Gson gson = new Gson();
-		 
-		 SimpleDateFormat currentTime = new SimpleDateFormat("yyyyMMdd_HHmmss"); 
-			String timeStamp = currentTime.format(new Date());
-			String fileName = timeStamp + "_pets.json";	
-			String directory = System.getProperty("user.dir");
-			String filePath =  directory  + File.separator + "src" + File.separator + "main"
-					+ File.separator + "java" + File.separator + "resources" + File.separator +
-					fileName;
-			
-			try(FileWriter timeStampedFile = new FileWriter(filePath))		
-			{
-				gson.toJson(exoticPetList, timeStampedFile);
-	            System.out.println("Pets saved to " + filePath);
-			}catch(IOException e)
-			{
-	            System.err.println("Failed to save pets: " + e.getMessage());
-			}
-		}
-	 }
+	}
+}
+	  
 		
