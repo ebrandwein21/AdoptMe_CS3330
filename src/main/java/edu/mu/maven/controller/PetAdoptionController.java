@@ -25,6 +25,10 @@ import edu.mu.maven.AdoptMeGroup23.PetLoader;
 import edu.mu.maven.Model.AgeComparator;
 import edu.mu.maven.Model.ExoticAnimal;
 import edu.mu.maven.Model.SpeciesComparator;
+import edu.mu.maven.Model.IDComparator;
+import edu.mu.maven.Model.TypeComparator;
+
+
 
 public class PetAdoptionController{
 	
@@ -83,6 +87,12 @@ public class PetAdoptionController{
 		        case "Species":
 		            speciesSort();
 		            break;
+		        case "ID":
+		            idSort();
+		            break;
+		        case "Type":
+		            typeSort();
+		            break;
 		    }
 		});
 		initView();
@@ -100,6 +110,18 @@ public class PetAdoptionController{
 
 	private void nameSort() {
 		Collections.sort(combinedPetList); 
+		updateGuiTableForSorting();
+	}
+	
+	private void idSort()
+	{
+		Collections.sort(combinedPetList, new IDComparator());
+		updateGuiTableForSorting();
+	}
+	
+	private void typeSort()
+	{
+		Collections.sort(combinedPetList, new TypeComparator());
 		updateGuiTableForSorting();
 	}
 	

@@ -99,6 +99,8 @@ public class GUIView extends JFrame {
 		sortBox.addItem("Name");
 		sortBox.addItem("Age");
 		sortBox.addItem("Species");
+		sortBox.addItem("Type");
+		sortBox.addItem("ID");
 		
 		JLabel sortBoxLabel = new JLabel("Sort by:");
 		sortBoxLabel.setBounds(23, 151, 45, 13);
