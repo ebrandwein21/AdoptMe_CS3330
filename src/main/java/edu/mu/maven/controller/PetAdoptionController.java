@@ -26,6 +26,10 @@ import edu.mu.maven.Model.AgeComparator;
 import edu.mu.maven.Model.ExoticAnimal;
 import edu.mu.maven.Model.ExoticPetAdapter;
 import edu.mu.maven.Model.SpeciesComparator;
+import edu.mu.maven.Model.IDComparator;
+import edu.mu.maven.Model.TypeComparator;
+
+
 
 public class PetAdoptionController{
 	
@@ -81,6 +85,12 @@ public class PetAdoptionController{
 		        case "Species":
 		            speciesSort();
 		            break;
+		        case "ID":
+		            idSort();
+		            break;
+		        case "Type":
+		            typeSort();
+		            break;
 		    }
 		});
 		initView();
@@ -98,6 +108,18 @@ public class PetAdoptionController{
 
 	private void nameSort() {
 		Collections.sort(combinedPetList); 
+		updateGuiTableForSorting();
+	}
+	
+	private void idSort()
+	{
+		Collections.sort(combinedPetList, new IDComparator());
+		updateGuiTableForSorting();
+	}
+	
+	private void typeSort()
+	{
+		Collections.sort(combinedPetList, new TypeComparator());
 		updateGuiTableForSorting();
 	}
 	
@@ -121,12 +143,15 @@ public class PetAdoptionController{
 				details.getPetAdopted().setText(String.valueOf(combinedPetList.get(index).GetName()));
 				details.getPetId().setText(String.valueOf(combinedPetList.get(index).GetID()));
 			details.setVisible(true);  
+			
+
 		}
 		//method to be called to populate table 
 	}
 
 	public void save() { //a file is saving, however, for now it is an empty list 
 		App.savedCombinedLoaders(combinedPetList);
+		
 		
 	}
 	/**
@@ -166,6 +191,7 @@ public class PetAdoptionController{
 			model.addRow(new Object[]{
 				pet.GetAnimalName()
 			});
+			updateGuiTableForSorting();
 			System.out.println(exoticPetList.size());
 			});
 	}
@@ -178,6 +204,26 @@ public class PetAdoptionController{
 		for(Pet pet : combinedPetList)
 		{
 			table.addRow(new Object[]{pet.GetName()});
+		}
+		
+        Gson gson = new Gson();
+		
+		SimpleDateFormat currentTime = new SimpleDateFormat("yyyyMMdd_HHmmss"); 
+		String timeStamp = currentTime.format(new Date());
+		String fileName = timeStamp + "_pets.json";	
+		String directory = System.getProperty("user.dir");
+		String filePath =  directory  + File.separator + "src" + File.separator + "main"
+				+ File.separator + "java" + File.separator + "resources" + File.separator +
+				fileName;
+		
+		try(FileWriter timeStampedFile = new FileWriter(filePath))		
+		{
+			//if button is clicked 
+			gson.toJson(combinedPetList, timeStampedFile);
+           System.out.println("Pets saved to " + filePath);
+		}catch(IOException e)
+		{
+           System.err.println("Failed to save pets: " + e.getMessage());
 		}
 	}	
 
