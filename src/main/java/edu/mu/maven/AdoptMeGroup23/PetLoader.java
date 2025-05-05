@@ -66,13 +66,12 @@ public class PetLoader
 		{
 			pet = gson.fromJson(petObject, Cat.class);
 			String details = "\nid: " + pet.GetID() + "\nname: " + pet.GetName() + "\ntype: " + pet.GetType() + "\nspecies: " + pet.GetSpecies() + "\nAge: " + pet.GetAge() + "\nAdopted: " + pet.GetAdopted(); 
-			System.out.println("\nPet info: " + details);
 		}
 	    else if(type.equals("Rabbit"))
 		{
 			pet = gson.fromJson(petObject, Rabbit.class);
 			String details = "\nid: " + pet.GetID() + "\nname: " + pet.GetName() + "\ntype: " + pet.GetType() + "\nspecies: " + pet.GetSpecies() + "\nAge: " + pet.GetAge() + "\nAdopted: " + pet.GetAdopted(); 
-			System.out.println("\nPet info: " + details);
+			
 		}else 
 		{
 			throw new IllegalArgumentException("Unknown pet type: " + type);	

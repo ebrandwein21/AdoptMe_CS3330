@@ -1,12 +1,14 @@
 package edu.mu.maven.controller;
 
 import edu.mu.maven.Model.Pet;
+import edu.mu.maven.Model.Rabbit;
 import edu.mu.maven.Model.Shelter;
 import edu.mu.maven.view.AddPetView;
 import edu.mu.maven.view.DetailsView;
 import edu.mu.maven.view.GUIView;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -18,11 +20,17 @@ import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import edu.mu.maven.AdoptMeGroup23.App;
 import edu.mu.maven.AdoptMeGroup23.ExoticAnimalJson;
 import edu.mu.maven.AdoptMeGroup23.PetLoader;
 import edu.mu.maven.Model.AgeComparator;
+import edu.mu.maven.Model.Cat;
+import edu.mu.maven.Model.Dog;
 import edu.mu.maven.Model.ExoticAnimal;
 import edu.mu.maven.Model.ExoticPetAdapter;
 import edu.mu.maven.Model.SpeciesComparator;
@@ -40,7 +48,7 @@ public class PetAdoptionController{
 	private DefaultTableModel table;
 	private GUIView view;
 	List<Pet> allPets = new ArrayList<>();
-	
+    List<Pet> sortedPetList = new ArrayList<>();
 
 	
 	public PetAdoptionController(Shelter<Pet> m, GUIView v){
@@ -133,6 +141,7 @@ public class PetAdoptionController{
 		petList = PetLoader.loadPets();
 		exoticPetList = ExoticAnimalJson.loadExoticAnimal();
 		combinedPetList = App.combineLoaders();
+		sortedPetList = readSortingJson();
 		
 		if(view.getTable().getSelectedRow() != -1) {
 			System.out.println(exoticPetList.size());
@@ -143,11 +152,10 @@ public class PetAdoptionController{
 				details.getPetType().setText(combinedPetList.get(index).GetType());
 				details.getPetSpecies().setText(combinedPetList.get(index).GetSpecies());
 				details.getPetAge().setText(String.valueOf(combinedPetList.get(index).GetAge()));
-				details.getPetAdopted().setText(String.valueOf(combinedPetList.get(index).GetName()));
+				details.getPetAdopted().setText(String.valueOf(combinedPetList.get(index).GetAdopted()));
 				details.getPetId().setText(String.valueOf(combinedPetList.get(index).GetID()));
+				
 			details.setVisible(true);  
-			
-
 		}
 		//method to be called to populate table 
 	}
@@ -211,24 +219,140 @@ public class PetAdoptionController{
 		
         Gson gson = new Gson();
 		
-		SimpleDateFormat currentTime = new SimpleDateFormat("yyyyMMdd_HHmmss"); 
-		String timeStamp = currentTime.format(new Date());
-		String fileName = timeStamp + "_pets.json";	
+		String fileName = "sortingTest.json";
 		String directory = System.getProperty("user.dir");
 		String filePath =  directory  + File.separator + "src" + File.separator + "main"
 				+ File.separator + "java" + File.separator + "resources" + File.separator +
 				fileName;
 		
-		try(FileWriter timeStampedFile = new FileWriter(filePath))		
+		try(FileWriter sortingWriter = new FileWriter(filePath))		
 		{
 			//if button is clicked 
-			gson.toJson(combinedPetList, timeStampedFile);
+		    gson.toJson(combinedPetList, sortingWriter);
            System.out.println("Pets saved to " + filePath);
 		}catch(IOException e)
 		{
-           System.err.println("Failed to save pets: " + e.getMessage());
+           System.err.println("Failed to save pets: " + e.getMessage());  
 		}
+		
+		combinedPetList = readSortingJson();
+	
 	}	
+	
+	public List<Pet> readSortingJson()
+	{
+
+		Gson gson = new Gson();
+		String fileName = "sortingTest.json";
+		String directory = System.getProperty("user.dir");
+		String filePath =  directory  + File.separator + "src" + File.separator + "main"
+				+ File.separator + "java" + File.separator + "resources" + File.separator +
+				fileName;
+		 try  {
+			 JsonElement fileElement = JsonParser.parseReader(new FileReader(filePath));
+			 JsonArray petArray = fileElement.getAsJsonArray();
+			    
+				for(JsonElement petField : petArray)
+				{
+			    JsonObject petObject = petField.getAsJsonObject();
+			    
+			    int id = petObject.get("id").getAsInt();
+			    String name = petObject.get("name").getAsString();
+			    String type = petObject.get("type").getAsString();
+			    String species = petObject.get("species").getAsString();
+			    int age = petObject.get("age").getAsInt();
+			    boolean adopted = petObject.get("adopted").getAsBoolean();
+		        
+			    if(type.equals("Dog"))
+				{
+			    	sortedPetList.add(gson.fromJson(petObject, Dog.class));
+				}
+			    else if(type.equals("Cat"))
+				{
+			    	sortedPetList.add(gson.fromJson(petObject, Cat.class));
+				}
+			    else if(type.equals("Rabbit"))
+				{
+			    	sortedPetList.add(gson.fromJson(petObject, Rabbit.class));	
+				}else if(type.equals("Bird"))
+					{
+					String exoticId = petObject.get("id").getAsString();
+                    String exoticName = petObject.get("name").getAsString();
+                    String exoticSpecies = petObject.get("species").getAsString();
+                    String exoticCategory = petObject.get("type").getAsString();
+                    int exoticAge = petObject.get("age").getAsInt();
+                    
+                    ExoticAnimal exotic = new ExoticAnimal(exoticId, exoticName, exoticSpecies, exoticCategory, exoticAge);
+                    exotic.setAdopted(petObject.get("adopted").getAsBoolean());
+                    sortedPetList.add(new ExoticPetAdapter(exotic));
+			    }
+				else if(type.equals("Reptile"))
+			    {
+				   String exoticId = petObject.get("id").getAsString();
+		           String exoticName = petObject.get("name").getAsString();
+		           String exoticSpecies = petObject.get("species").getAsString();
+		           String exoticCategory = petObject.get("type").getAsString();
+		           int exoticAge = petObject.get("age").getAsInt();
+		                    
+		           ExoticAnimal exotic = new ExoticAnimal(exoticId, exoticName, exoticSpecies, exoticCategory, exoticAge);
+		           exotic.setAdopted(petObject.get("adopted").getAsBoolean());
+		           sortedPetList.add(new ExoticPetAdapter(exotic));
+					    
+				}
+				else if(type.equals("Iguana"))
+			    {
+				   String exoticId = petObject.get("id").getAsString();
+		           String exoticName = petObject.get("name").getAsString();
+		           String exoticSpecies = petObject.get("species").getAsString();
+		           String exoticCategory = petObject.get("type").getAsString();
+		           int exoticAge = petObject.get("age").getAsInt();
+		                    
+		           ExoticAnimal exotic = new ExoticAnimal(exoticId, exoticName, exoticSpecies, exoticCategory, exoticAge);
+		           exotic.setAdopted(petObject.get("adopted").getAsBoolean());
+		           sortedPetList.add(new ExoticPetAdapter(exotic));
+					    
+				}
+				else if(type.equals("Python"))
+			    {
+				   String exoticId = petObject.get("id").getAsString();
+		           String exoticName = petObject.get("name").getAsString();
+		           String exoticSpecies = petObject.get("species").getAsString();
+		           String exoticCategory = petObject.get("type").getAsString();
+		           int exoticAge = petObject.get("age").getAsInt();
+		                    
+		           ExoticAnimal exotic = new ExoticAnimal(exoticId, exoticName, exoticSpecies, exoticCategory, exoticAge);
+		           exotic.setAdopted(petObject.get("adopted").getAsBoolean());
+		           sortedPetList.add(new ExoticPetAdapter(exotic));
+					    
+				}
+				else if(type.equals("Toucan"))
+			    {
+				   String exoticId = petObject.get("id").getAsString();
+		           String exoticName = petObject.get("name").getAsString();
+		           String exoticSpecies = petObject.get("species").getAsString();
+		           String exoticCategory = petObject.get("type").getAsString();
+		           int exoticAge = petObject.get("age").getAsInt();
+		                    
+		           ExoticAnimal exotic = new ExoticAnimal(exoticId, exoticName, exoticSpecies, exoticCategory, exoticAge);
+		           exotic.setAdopted(petObject.get("adopted").getAsBoolean());
+		           sortedPetList.add(new ExoticPetAdapter(exotic));
+					    
+				}
+				else
+				{
+					throw new IllegalArgumentException("Unknown pet type: " + type);	
+				}
+			    
+				}
+				System.out.println("Successfully loaded pets from sortingTest.json");
+			    
+			    
+				}catch (IOException e) {
+        System.out.println("Failed to read pets: " + e.getMessage());
+        return null;
+    }
+		 return sortedPetList;
+	}
 
 	private void adoptPet() {
 		int index = view.getTable().getSelectedRow();

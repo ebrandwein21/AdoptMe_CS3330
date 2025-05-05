@@ -66,6 +66,7 @@ public class App {
     		{
     		    Pet exoticPetTransfer = new ExoticPetAdapter(exoticPet);
     		    combinedPetList.add(exoticPetTransfer);
+    		    
     		}
     	}
     			return combinedPetList;
