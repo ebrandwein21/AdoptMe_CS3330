@@ -24,6 +24,7 @@ import edu.mu.maven.AdoptMeGroup23.ExoticAnimalJson;
 import edu.mu.maven.AdoptMeGroup23.PetLoader;
 import edu.mu.maven.Model.AgeComparator;
 import edu.mu.maven.Model.ExoticAnimal;
+import edu.mu.maven.Model.ExoticPetAdapter;
 import edu.mu.maven.Model.SpeciesComparator;
 import edu.mu.maven.Model.IDComparator;
 import edu.mu.maven.Model.TypeComparator;
@@ -138,23 +139,12 @@ public class PetAdoptionController{
 			int index = view.getTable().getSelectedRow();
 			DetailsView details = new DetailsView();
 			
-			if(index < petList.size()) {
-				details.getPetName().setText(petList.get(index).GetName());
-				details.getPetType().setText(petList.get(index).GetType());
-				details.getPetSpecies().setText(petList.get(index).GetSpecies());
-				details.getPetAge().setText(String.valueOf(petList.get(index).GetAge()));
-				details.getPetAdopted().setText(String.valueOf(petList.get(index).GetName()));
-				details.getPetId().setText(String.valueOf(petList.get(index).GetID()));
-			}
-			else if(index >= petList.size()) {
-				index = index - petList.size();
-				details.getPetName().setText(exoticPetList.get(index).GetAnimalName());
-				details.getPetType().setText(exoticPetList.get(index).GetCategory());
-				details.getPetSpecies().setText(exoticPetList.get(index).GetSubSpecies());
-				details.getPetAge().setText(String.valueOf(exoticPetList.get(index).GetYearsOld()));
-				details.getPetAdopted().setText(String.valueOf(exoticPetList.get(index).isAdopted()));
-				details.getPetId().setText(String.valueOf(exoticPetList.get(index).GetUniqueId()));
-			}
+				details.getPetName().setText(combinedPetList.get(index).GetName());
+				details.getPetType().setText(combinedPetList.get(index).GetType());
+				details.getPetSpecies().setText(combinedPetList.get(index).GetSpecies());
+				details.getPetAge().setText(String.valueOf(combinedPetList.get(index).GetAge()));
+				details.getPetAdopted().setText(String.valueOf(combinedPetList.get(index).GetName()));
+				details.getPetId().setText(String.valueOf(combinedPetList.get(index).GetID()));
 			details.setVisible(true);  
 		}
 		//method to be called to populate table 
@@ -182,13 +172,21 @@ public class PetAdoptionController{
 		
 		AddPetView newPet = new AddPetView();
 		newPet.getAddPetBtn().addActionListener(e -> {
-			int exoticId = petList.get((petList.size() - 1)).GetID() + 1;
+			int id = combinedPetList.get((petList.size() - 1)).GetID() + 1;
 			String name = newPet.getNameField().getText();
 			String animal = newPet.getAnimalField().getText();
 			String species = newPet.getSpeciesField().getText();
-			int age = Integer.parseInt(newPet.getAgeField().getText());
-			ExoticAnimal pet = new ExoticAnimal(String.valueOf(exoticId), name, animal, species, age);
-			exoticPetList.add(pet);
+			String ageInput = newPet.getAgeField().getText();
+			Integer age = -1;
+			try {
+				age = Integer.parseInt(ageInput);
+			} catch (NumberFormatException e1) {
+
+				System.err.println("Input an integer");
+			}
+			ExoticAnimal pet = new ExoticAnimal(String.valueOf(id), name, animal, species, age);
+			Pet exoticPetTransfer = new ExoticPetAdapter(pet);
+			combinedPetList.add(exoticPetTransfer);
 			DefaultTableModel model = (DefaultTableModel) view.getTable().getModel();
 			model.addRow(new Object[]{
 				pet.GetAnimalName()
