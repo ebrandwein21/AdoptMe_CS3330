@@ -40,327 +40,334 @@ import edu.mu.maven.Model.TypeComparator;
 
 
 public class PetAdoptionController{
-	
-	private List<Pet> combinedPetList = new ArrayList<>();
-	private List<Pet> petList = new ArrayList<>();
-	private List<ExoticAnimal> exoticPetList = new ArrayList<>();
-	private Shelter<Pet> model;
-	private DefaultTableModel table;
-	private GUIView view;
-	List<Pet> allPets = new ArrayList<>();
-    List<Pet> sortedPetList = new ArrayList<>();
-
-	
-	public PetAdoptionController(Shelter<Pet> m, GUIView v){
-		model = m;
-		view = v;
-	}
-	/**
-	 * initView initializes the view GUI component so all pets are visible
-	 */
-	public void initView() {
-		view.setVisible(true);
-		DefaultTableModel model = (DefaultTableModel) view.getTable().getModel();
-		for(int j = 1; j < combinedPetList.size(); j++) {
-			model.setValueAt(combinedPetList.get(j).GetName(), j, 0);
-			}
-		updateGuiTableForSorting();
-		
-		}
-	
-	/**
-	 * initController initializes the controller and adds Action Listeners to each button,
-	 * allowing them to connect to their corresponding method. It also calls initView.
-	 */
-	public void initController() {
-		
-		
-		view.getBtnAdopt().addActionListener(e -> adoptPet());
-		view.getBtnAdd().addActionListener(e -> addPet());
-		view.getBtnRemove().addActionListener(e -> removePet());
-		view.getBtnSave().addActionListener(e -> save());
-		view.getBtnView().addActionListener(e -> view());
-		
-		view.getSortBox().addActionListener(e -> {
-		    String selected = (String) view.getSortBox().getSelectedItem();
-		    switch (selected) {
-		        case "Name":
-		            nameSort();
-		            break;
-		        case "Age":
-		            ageSort();
-		            break;
-		        case "Species":
-		            speciesSort();
-		            break;
-		        case "ID":
-		            idSort();
-		            break;
-		        case "Type":
-		            typeSort();
-		            break;
-		    }
-		});
-		initView();
-	}
-	
-	private void speciesSort() {
-		Collections.sort(combinedPetList, new SpeciesComparator());
-		updateGuiTableForSorting();
-	}
-
-	private void ageSort() {
-		Collections.sort(combinedPetList, new AgeComparator());
-		updateGuiTableForSorting();
-	}
-
-	private void nameSort() {
-		Collections.sort(combinedPetList); 
-		updateGuiTableForSorting();
-	}
-	
-	private void idSort()
-	{
-		Collections.sort(combinedPetList, new IDComparator());
-		updateGuiTableForSorting();
-	}
-	
-	private void typeSort()
-	{
-		Collections.sort(combinedPetList, new TypeComparator());
-		updateGuiTableForSorting();
-	}
-	
-	/**
-	 * view opens a new window with the details of the selected pet.
-	 */
-    public void view() {
-		petList = PetLoader.loadPets();
-		exoticPetList = ExoticAnimalJson.loadExoticAnimal();
-		combinedPetList = App.combineLoaders();
-		sortedPetList = readSortingJson();
-		
-		if(view.getTable().getSelectedRow() != -1) {
-			System.out.println(exoticPetList.size());
-			int index = view.getTable().getSelectedRow();
-			DetailsView details = new DetailsView();
-			
-				details.getPetName().setText(combinedPetList.get(index).GetName());
-				details.getPetType().setText(combinedPetList.get(index).GetType());
-				details.getPetSpecies().setText(combinedPetList.get(index).GetSpecies());
-				details.getPetAge().setText(String.valueOf(combinedPetList.get(index).GetAge()));
-				details.getPetAdopted().setText(String.valueOf(combinedPetList.get(index).GetAdopted()));
-				details.getPetId().setText(String.valueOf(combinedPetList.get(index).GetID()));
-				
-			details.setVisible(true);  
-		}
-		//method to be called to populate table 
-	}
-
-	public void save() { //a file is saving, however, for now it is an empty list 
-		App.savedCombinedLoaders(combinedPetList);
-		
-		
-	}
-	/**
-	 * removePet removes the pet the user has selected
-	 */
-	private void removePet() {
-		//Remove specific pet from list
-		if(view.getTable().getSelectedRow() != -1) {
-			view.getTableModel().removeRow(view.getTable().getSelectedRow());
-		}
-	}
-	/**
-	 * addPet takes the information the user inputs into the text fields and adds a new pet with this information.
-	 */
-	private void addPet() {
-		//Add pet to list
-		//Prompt user with new window to enter pet's information
-		
-		AddPetView newPet = new AddPetView();
-		newPet.getAddPetBtn().addActionListener(e -> {
-			String id = combinedPetList.get((petList.size() - 1)).GetID() + 1;
-			String name = newPet.getNameField().getText();
-			String animal = newPet.getAnimalField().getText();
-			String species = newPet.getSpeciesField().getText();
-			String ageInput = newPet.getAgeField().getText();
-			Integer age = -1;
-			try {
-				age = Integer.parseInt(ageInput);
-			} catch (NumberFormatException e1) {
-
-				System.err.println("Input an integer");
-			}
-			ExoticAnimal pet = new ExoticAnimal(String.valueOf(id), name, animal, species, age);
-			Pet exoticPetTransfer = new ExoticPetAdapter(pet);
-			combinedPetList.add(exoticPetTransfer);
-			DefaultTableModel model = (DefaultTableModel) view.getTable().getModel();
-			model.addRow(new Object[]{
-				pet.GetAnimalName()
-			});
-			newPet.getAddMessage().setText("Added " + pet.GetAnimalName());
-			updateGuiTableForSorting();
-			});
-	}
-	
-	public void updateGuiTableForSorting()
-	{
-		table = view.getTableModel();
-		table.setRowCount(0);
-		
-		for(Pet pet : combinedPetList)
-		{
-			table.addRow(new Object[]{pet.GetName()});
-		}
-		
-        Gson gson = new Gson();
-		
-		String fileName = "sortingTest.json";
-		String directory = System.getProperty("user.dir");
-		String filePath =  directory  + File.separator + "src" + File.separator + "main"
-				+ File.separator + "java" + File.separator + "resources" + File.separator +
-				fileName;
-		
-		try(FileWriter sortingWriter = new FileWriter(filePath))		
-		{
-			//if button is clicked 
-		    gson.toJson(combinedPetList, sortingWriter);
-           System.out.println("Pets saved to " + filePath);
-		}catch(IOException e)
-		{
-           System.err.println("Failed to save pets: " + e.getMessage());  
-		}
-		
-		combinedPetList = readSortingJson();
-	
-	}	
-	
-	public List<Pet> readSortingJson()
-	{
-
-		Gson gson = new Gson();
-		String fileName = "sortingTest.json";
-		String directory = System.getProperty("user.dir");
-		String filePath =  directory  + File.separator + "src" + File.separator + "main"
-				+ File.separator + "java" + File.separator + "resources" + File.separator +
-				fileName;
-		 try  {
-			 JsonElement fileElement = JsonParser.parseReader(new FileReader(filePath));
-			 JsonArray petArray = fileElement.getAsJsonArray();
-			    
-				for(JsonElement petField : petArray)
-				{
-			    JsonObject petObject = petField.getAsJsonObject();
-			    
-			    int id = petObject.get("id").getAsInt();
-			    String name = petObject.get("name").getAsString();
-			    String type = petObject.get("type").getAsString();
-			    String species = petObject.get("species").getAsString();
-			    int age = petObject.get("age").getAsInt();
-			    boolean adopted = petObject.get("adopted").getAsBoolean();
-		        
-			    if(type.equals("Dog"))
-				{
-			    	sortedPetList.add(gson.fromJson(petObject, Dog.class));
-				}
-			    else if(type.equals("Cat"))
-				{
-			    	sortedPetList.add(gson.fromJson(petObject, Cat.class));
-				}
-			    else if(type.equals("Rabbit"))
-				{
-			    	sortedPetList.add(gson.fromJson(petObject, Rabbit.class));	
-				}else if(type.equals("Bird"))
-					{
-					String exoticId = petObject.get("id").getAsString();
-                    String exoticName = petObject.get("name").getAsString();
-                    String exoticSpecies = petObject.get("species").getAsString();
-                    String exoticCategory = petObject.get("type").getAsString();
-                    int exoticAge = petObject.get("age").getAsInt();
-                    
-                    ExoticAnimal exotic = new ExoticAnimal(exoticId, exoticName, exoticSpecies, exoticCategory, exoticAge);
-                    exotic.setAdopted(petObject.get("adopted").getAsBoolean());
-                    sortedPetList.add(new ExoticPetAdapter(exotic));
-			    }
-				else if(type.equals("Reptile"))
-			    {
-				   String exoticId = petObject.get("id").getAsString();
-		           String exoticName = petObject.get("name").getAsString();
-		           String exoticSpecies = petObject.get("species").getAsString();
-		           String exoticCategory = petObject.get("type").getAsString();
-		           int exoticAge = petObject.get("age").getAsInt();
-		                    
-		           ExoticAnimal exotic = new ExoticAnimal(exoticId, exoticName, exoticSpecies, exoticCategory, exoticAge);
-		           exotic.setAdopted(petObject.get("adopted").getAsBoolean());
-		           sortedPetList.add(new ExoticPetAdapter(exotic));
-					    
-				}
-				else if(type.equals("Iguana"))
-			    {
-				   String exoticId = petObject.get("id").getAsString();
-		           String exoticName = petObject.get("name").getAsString();
-		           String exoticSpecies = petObject.get("species").getAsString();
-		           String exoticCategory = petObject.get("type").getAsString();
-		           int exoticAge = petObject.get("age").getAsInt();
-		                    
-		           ExoticAnimal exotic = new ExoticAnimal(exoticId, exoticName, exoticSpecies, exoticCategory, exoticAge);
-		           exotic.setAdopted(petObject.get("adopted").getAsBoolean());
-		           sortedPetList.add(new ExoticPetAdapter(exotic));
-					    
-				}
-				else if(type.equals("Python"))
-			    {
-				   String exoticId = petObject.get("id").getAsString();
-		           String exoticName = petObject.get("name").getAsString();
-		           String exoticSpecies = petObject.get("species").getAsString();
-		           String exoticCategory = petObject.get("type").getAsString();
-		           int exoticAge = petObject.get("age").getAsInt();
-		                    
-		           ExoticAnimal exotic = new ExoticAnimal(exoticId, exoticName, exoticSpecies, exoticCategory, exoticAge);
-		           exotic.setAdopted(petObject.get("adopted").getAsBoolean());
-		           sortedPetList.add(new ExoticPetAdapter(exotic));
-					    
-				}
-				else if(type.equals("Toucan"))
-			    {
-				   String exoticId = petObject.get("id").getAsString();
-		           String exoticName = petObject.get("name").getAsString();
-		           String exoticSpecies = petObject.get("species").getAsString();
-		           String exoticCategory = petObject.get("type").getAsString();
-		           int exoticAge = petObject.get("age").getAsInt();
-		                    
-		           ExoticAnimal exotic = new ExoticAnimal(exoticId, exoticName, exoticSpecies, exoticCategory, exoticAge);
-		           exotic.setAdopted(petObject.get("adopted").getAsBoolean());
-		           sortedPetList.add(new ExoticPetAdapter(exotic));
-					    
-				}
-				else
-				{
-					throw new IllegalArgumentException("Unknown pet type: " + type);	
-				}
-			    
-				}
-				System.out.println("Successfully loaded pets from sortingTest.json");
-			    
-			    
-				}catch (IOException e) {
-        System.out.println("Failed to read pets: " + e.getMessage());
-        return null;
-    }
-		 return sortedPetList;
-	}
-
-	private void adoptPet() {
-		int index = view.getTable().getSelectedRow();
-		if(index != -1) {
-			if(combinedPetList.get(index).GetAdopted() != true) {
-				combinedPetList.get(index).SetAdopted(true);
-			}
-			else {
-				view.getCannotAdopt().setText("Sorry this pet has already been adopted");
-			}
-
-		}
-	}
+	 
+ 	private List<Pet> combinedPetList = new ArrayList<>();
+ 	private List<Pet> petList = new ArrayList<>();
+ 	private List<ExoticAnimal> exoticPetList = new ArrayList<>();
+ 	private Shelter<Pet> model;
+ 	private DefaultTableModel table;
+ 	private GUIView view;
+ 	List<Pet> allPets = new ArrayList<>();
+ 	
+     List<Pet> sortedPetList = new ArrayList<>();
+ 
+ 
+ 	public PetAdoptionController(Shelter<Pet> m, GUIView v){
+ 		model = m;
+ 		view = v;
+ 	}
+ 	/**
+ 	 * initView initializes the view GUI component so all pets are visible
+ 	 */
+ 	public void initView() {
+ 		view.setVisible(true);
+ 		for(int j = 1; j < petList.size(); j++) {
+ 			view.getTable().setValueAt(petList.get(j).GetName(), j, 0);
+ 			}
+ 		int j = 0;
+ 		for(int i = petList.size(); i < (petList.size() + exoticPetList.size()); i++) {
+ 				view.getTable().setValueAt(exoticPetList.get(j).GetAnimalName(), i, 0);
+ 				j++;
+ 			}
+ 
+ 		}
+ 
+ 	/**
+ 	 * initController initializes the controller and adds Action Listeners to each button,
+ 	 * allowing them to connect to their corresponding method. It also calls initView.
+ 	 */
+ 	public void initController() {
+ 
+ 		petList = PetLoader.loadPets();
+ 		exoticPetList = ExoticAnimalJson.loadExoticAnimal();
+ 		combinedPetList = App.combineLoaders();
+ 		view.getBtnAdopt().addActionListener(e -> adoptPet());
+ 		view.getBtnAdd().addActionListener(e -> addPet());
+ 		view.getBtnRemove().addActionListener(e -> removePet());
+ 		view.getBtnSave().addActionListener(e -> save());
+ 		view.getBtnView().addActionListener(e -> view());
+ 
+ 		view.getSortBox().addActionListener(e -> {
+ 		    String selected = (String) view.getSortBox().getSelectedItem();
+ 		    switch (selected) {
+ 		        case "Name":
+ 		            nameSort();
+ 		            break;
+ 		        case "Age":
+ 		            ageSort();
+ 		            break;
+ 		        case "Species":
+ 		            speciesSort();
+ 		            break;
+ 		        case "ID":
+ 		            idSort();
+ 		            break;
+ 		        case "Type":
+ 		            typeSort();
+ 		            break;
+ 		    }
+ 		});
+ 		initView();
+ 	}
+ 
+ 	private void speciesSort() {
+ 		Collections.sort(combinedPetList, new SpeciesComparator());
+ 		updateGuiTableForSorting();
+ 	}
+ 
+ 	private void ageSort() {
+ 		Collections.sort(combinedPetList, new AgeComparator());
+ 		updateGuiTableForSorting();
+ 	}
+ 
+ 	private void nameSort() {
+ 		Collections.sort(combinedPetList); 
+ 		updateGuiTableForSorting();
+ 	}
+ 
+ 	private void idSort()
+ 	{
+ 		Collections.sort(combinedPetList, new IDComparator());
+ 		updateGuiTableForSorting();
+ 	}
+ 
+ 	private void typeSort()
+ 	{
+ 		Collections.sort(combinedPetList, new TypeComparator());
+ 		updateGuiTableForSorting();
+ 	}
+ 
+ 	/**
+ 	 * view opens a new window with the details of the selected pet
+ 	 */
+     public void view() {
+ 		
+ 		sortedPetList = readSortingJson();
+ 
+ 		if(view.getTable().getSelectedRow() != -1) {
+ 			System.out.println(exoticPetList.size());
+ 			int index = view.getTable().getSelectedRow();
+ 			DetailsView details = new DetailsView();
+ 
+ 				details.getPetName().setText(combinedPetList.get(index).GetName());
+ 				details.getPetType().setText(combinedPetList.get(index).GetType());
+ 				details.getPetSpecies().setText(combinedPetList.get(index).GetSpecies());
+ 				details.getPetAge().setText(String.valueOf(combinedPetList.get(index).GetAge()));
+ 				details.getPetAdopted().setText(String.valueOf(combinedPetList.get(index).GetAdopted()));
+ 				details.getPetId().setText(String.valueOf(combinedPetList.get(index).GetID()));
+ 				
+ 			details.setVisible(true);  
+ 			
+ 
+ 		}
+ 		//method to be called to populate table 
+ 	}
+ 
+ 	public void save() { //a file is saving, however, for now it is an empty list 
+ 		App.savedCombinedLoaders(combinedPetList);
+ 
+ 
+ 	}
+ 	/**
+ 	 * removePet removes the pet the user has selected
+ 	 */
+ 	private void removePet() {
+ 		//Remove specific pet from list
+ 		if(view.getTable().getSelectedRow() != -1) {
+ 			view.getTableModel().removeRow(view.getTable().getSelectedRow());
+ 		}
+ 	}
+ 	/**
+ 	 * addPet takes the information the user inputs into the text fields and adds a new pet with this information.
+ 	 */
+ 	private void addPet() {
+ 		//Add pet to list
+ 		//Prompt user with new window to enter pet's information
+ 
+ 		AddPetView newPet = new AddPetView();
+ 		newPet.getAddPetBtn().addActionListener(e -> {
+ 			int id = combinedPetList.get((petList.size() - 1)).GetID() + 1;
+ 			String name = newPet.getNameField().getText();
+ 			String animal = newPet.getAnimalField().getText();
+ 			String species = newPet.getSpeciesField().getText();
+ 			String ageInput = newPet.getAgeField().getText();
+ 			Integer age = -1;
+ 			try {
+ 				age = Integer.parseInt(ageInput);
+ 			} catch (NumberFormatException e1) {
+ 
+ 				System.err.println("Input an integer");
+ 			}
+ 			ExoticAnimal pet = new ExoticAnimal(String.valueOf(id), name, animal, species, age);
+ 			Pet exoticPetTransfer = new ExoticPetAdapter(pet);
+ 			combinedPetList.add(exoticPetTransfer);
+ 			DefaultTableModel model = (DefaultTableModel) view.getTable().getModel();
+ 			model.addRow(new Object[]{
+ 				pet.GetAnimalName()
+ 			});
+ 			updateGuiTableForSorting();
+ 			System.out.println(exoticPetList.size());
+ 			});
+ 	}
+ 
+ 	public void updateGuiTableForSorting()
+ 	{
+ 		table = view.getTableModel();
+ 		table.setRowCount(0);
+ 
+ 		for(Pet pet : combinedPetList)
+ 		{
+ 			table.addRow(new Object[]{pet.GetName()});
+ 		}
+ 
+         Gson gson = new Gson();
+ 
+ 		
+ 		String fileName = "sortingTest.json";
+ 		String directory = System.getProperty("user.dir");
+ 		String filePath =  directory  + File.separator + "src" + File.separator + "main"
+ 				+ File.separator + "java" + File.separator + "resources" + File.separator +
+ 				fileName;
+ 
+ 		try(FileWriter sortingWriter = new FileWriter(filePath))		
+ 		{
+ 			//if button is clicked 
+ 		    gson.toJson(combinedPetList, sortingWriter);
+            System.out.println("Pets saved to " + filePath);
+ 		}catch(IOException e)
+ 		{
+            System.err.println("Failed to save pets: " + e.getMessage());  
+ 		}
+ 		
+ 		combinedPetList = readSortingJson();
+ 	
+ 	}	
+ 	
+ 	public List<Pet> readSortingJson()
+ 	{
+ 		sortedPetList.clear();
+ 		Gson gson = new Gson();
+ 		String fileName = "sortingTest.json";
+ 		String directory = System.getProperty("user.dir");
+ 		String filePath =  directory  + File.separator + "src" + File.separator + "main"
+ 				+ File.separator + "java" + File.separator + "resources" + File.separator +
+ 				fileName;
+ 		 try  {
+ 			 JsonElement fileElement = JsonParser.parseReader(new FileReader(filePath));
+ 			 JsonArray petArray = fileElement.getAsJsonArray();
+ 			    
+ 				for(JsonElement petField : petArray)
+ 				{
+ 			    JsonObject petObject = petField.getAsJsonObject();
+ 			    
+ 			    int id = petObject.get("id").getAsInt();
+ 			    String name = petObject.get("name").getAsString();
+ 			    String type = petObject.get("type").getAsString();
+ 			    String species = petObject.get("species").getAsString();
+ 			    int age = petObject.get("age").getAsInt();
+ 			    boolean adopted = petObject.get("adopted").getAsBoolean();
+ 		        
+ 			    if(type.equals("Dog"))
+ 				{
+ 			    	sortedPetList.add(gson.fromJson(petObject, Dog.class));
+ 				}
+ 			    else if(type.equals("Cat"))
+ 				{
+ 			    	sortedPetList.add(gson.fromJson(petObject, Cat.class));
+ 				}
+ 			    else if(type.equals("Rabbit"))
+ 				{
+ 			    	sortedPetList.add(gson.fromJson(petObject, Rabbit.class));	
+ 				}else if(type.equals("Bird"))
+ 					{
+ 					String exoticId = petObject.get("id").getAsString();
+                     String exoticName = petObject.get("name").getAsString();
+                     String exoticSpecies = petObject.get("species").getAsString();
+                     String exoticCategory = petObject.get("type").getAsString();
+                     int exoticAge = petObject.get("age").getAsInt();
+                     
+                     ExoticAnimal exotic = new ExoticAnimal(exoticId, exoticName, exoticSpecies, exoticCategory, exoticAge);
+                     exotic.setAdopted(petObject.get("adopted").getAsBoolean());
+                     sortedPetList.add(new ExoticPetAdapter(exotic));
+ 			    }
+ 				else if(type.equals("Reptile"))
+ 			    {
+ 				   String exoticId = petObject.get("id").getAsString();
+ 		           String exoticName = petObject.get("name").getAsString();
+ 		           String exoticSpecies = petObject.get("species").getAsString();
+ 		           String exoticCategory = petObject.get("type").getAsString();
+ 		           int exoticAge = petObject.get("age").getAsInt();
+ 		                    
+ 		           ExoticAnimal exotic = new ExoticAnimal(exoticId, exoticName, exoticSpecies, exoticCategory, exoticAge);
+ 		           exotic.setAdopted(petObject.get("adopted").getAsBoolean());
+ 		           sortedPetList.add(new ExoticPetAdapter(exotic));
+ 					    
+ 				}
+ 				else if(type.equals("Iguana"))
+ 			    {
+ 				   String exoticId = petObject.get("id").getAsString();
+ 		           String exoticName = petObject.get("name").getAsString();
+ 		           String exoticSpecies = petObject.get("species").getAsString();
+ 		           String exoticCategory = petObject.get("type").getAsString();
+ 		           int exoticAge = petObject.get("age").getAsInt();
+ 		                    
+ 		           ExoticAnimal exotic = new ExoticAnimal(exoticId, exoticName, exoticSpecies, exoticCategory, exoticAge);
+ 		           exotic.setAdopted(petObject.get("adopted").getAsBoolean());
+ 		           sortedPetList.add(new ExoticPetAdapter(exotic));
+ 					    
+ 				}
+ 				else if(type.equals("Python"))
+ 			    {
+ 				   String exoticId = petObject.get("id").getAsString();
+ 		           String exoticName = petObject.get("name").getAsString();
+ 		           String exoticSpecies = petObject.get("species").getAsString();
+ 		           String exoticCategory = petObject.get("type").getAsString();
+ 		           int exoticAge = petObject.get("age").getAsInt();
+ 		                    
+ 		           ExoticAnimal exotic = new ExoticAnimal(exoticId, exoticName, exoticSpecies, exoticCategory, exoticAge);
+ 		           exotic.setAdopted(petObject.get("adopted").getAsBoolean());
+ 		           sortedPetList.add(new ExoticPetAdapter(exotic));
+ 					    
+ 				}
+ 				else if(type.equals("Toucan"))
+ 			    {
+ 				   String exoticId = petObject.get("id").getAsString();
+ 		           String exoticName = petObject.get("name").getAsString();
+ 		           String exoticSpecies = petObject.get("species").getAsString();
+ 		           String exoticCategory = petObject.get("type").getAsString();
+ 		           int exoticAge = petObject.get("age").getAsInt();
+ 		                    
+ 		           ExoticAnimal exotic = new ExoticAnimal(exoticId, exoticName, exoticSpecies, exoticCategory, exoticAge);
+ 		           exotic.setAdopted(petObject.get("adopted").getAsBoolean());
+ 		           sortedPetList.add(new ExoticPetAdapter(exotic));
+ 					    
+ 				}
+ 				else
+ 				{
+ 					throw new IllegalArgumentException("Unknown pet type: " + type);	
+ 				}
+ 			    
+ 				}
+ 				System.out.println("Successfully loaded pets from sortingTest.json");
+ 			    
+ 			    
+ 				}catch (IOException e) {
+         System.out.println("Failed to read pets: " + e.getMessage());
+         return null;
+     }
+ 		 return sortedPetList;
+ 	}
+ 
+ 	private void adoptPet() {
+ 		int index = view.getTable().getSelectedRow();
+ 		if(index != -1) {
+ 			if(combinedPetList.get(index).GetAdopted() != true) {
+ 				combinedPetList.get(index).SetAdopted(true);
+ 			}
+ 			else {
+ 				view.getCannotAdopt().setText("Sorry this pet has already been adopted");
+ 			}
+ 
+ 		}
+ 	}
 }

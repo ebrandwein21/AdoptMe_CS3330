@@ -47,7 +47,7 @@ public class PetLoader
 			
 	    JsonObject petObject = petField.getAsJsonObject();
 	    
-	    String id = petObject.get("id").getAsString();
+	    int id = petObject.get("id").getAsInt();
 	    String name = petObject.get("name").getAsString();
 	    String type = petObject.get("type").getAsString();
 	    String species = petObject.get("species").getAsString();

@@ -1,12 +1,12 @@
 package edu.mu.maven.Model;
 
 public abstract class Pet implements Comparable<Pet> {
-   protected int age;
-   protected String name, type, species, id;
+   protected int age, id;
+   protected String name, type, species;
    protected boolean adopted;
     
    
-    public Pet(String id, String name, String type, String species, int age, boolean adopted)
+    public Pet(int id, String name, String type, String species, int age, boolean adopted)
     {
     	this.id = id;
     	this.name = name;
@@ -16,12 +16,12 @@ public abstract class Pet implements Comparable<Pet> {
     	this.adopted = adopted;
     }
     
-    public String GetID()
+    public int GetID()
     {
     	return id;
     }
     
-    public void SetID(String id)
+    public void SetID(int id)
     {
     	this.id = id;
     }

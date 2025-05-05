@@ -1,13 +1,19 @@
 package edu.mu.maven.Model;
 
 public class ExoticAnimal {
-     protected String uniqueId, animalName, category, subSpecies, exoticId;
-     protected int yearsOld;
+	 protected String uniqueId, animalName, category, subSpecies;
+     protected int yearsOld, exoticId;
      boolean adopted = false;
 
 	public ExoticAnimal(String uniqueId, String animalName, String category, String subSpecies, int yearsOld)
      {
-
+		if(uniqueId != null) {
+    		 String newID = uniqueId.replaceAll("[^0-9]", "");
+    	 	 this.exoticId = Integer.parseInt(newID); 
+    	 }
+    	 else {
+    		 this.exoticId = Integer.parseInt(uniqueId);
+    	 }
 		 this.uniqueId = uniqueId;
     	 this.animalName = animalName;
     	 this.category = category;
@@ -23,13 +29,13 @@ public class ExoticAnimal {
 		this.adopted = adopted;
 	}
 	
-     public String GetUniqueId()
+     public int GetUniqueId()
      {
     	   
      	return exoticId;
      }
      
-     public void SetUniqueID(String exoticId)
+     public void SetUniqueID(int exoticId)
      {
         
      	this.exoticId = exoticId;
