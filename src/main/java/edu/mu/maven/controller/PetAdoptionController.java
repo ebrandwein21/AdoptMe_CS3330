@@ -172,7 +172,7 @@ public class PetAdoptionController{
 		
 		AddPetView newPet = new AddPetView();
 		newPet.getAddPetBtn().addActionListener(e -> {
-			int id = combinedPetList.get((petList.size() - 1)).GetID() + 1;
+			String id = combinedPetList.get((petList.size() - 1)).GetID() + 1;
 			String name = newPet.getNameField().getText();
 			String animal = newPet.getAnimalField().getText();
 			String species = newPet.getSpeciesField().getText();
