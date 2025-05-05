@@ -48,14 +48,11 @@ public class PetAdoptionController{
 	 */
 	public void initView() {
 		view.setVisible(true);
-		for(int j = 1; j < petList.size(); j++) {
-			view.getTable().setValueAt(petList.get(j).GetName(), j, 0);
+		DefaultTableModel model = (DefaultTableModel) view.getTable().getModel();
+		for(int j = 1; j < combinedPetList.size(); j++) {
+			model.setValueAt(combinedPetList.get(j).GetName(), j, 0);
 			}
-		int j = 0;
-		for(int i = petList.size(); i < (petList.size() + exoticPetList.size()); i++) {
-				view.getTable().setValueAt(exoticPetList.get(j).GetAnimalName(), i, 0);
-				j++;
-			}
+		updateGuiTableForSorting();
 		
 		}
 	
@@ -105,7 +102,7 @@ public class PetAdoptionController{
 	}
 	
 	/**
-	 * view opens a new window with the details of the selected pet
+	 * view opens a new window with the details of the selected pet.
 	 */
     public void view() {
 		petList = PetLoader.loadPets();

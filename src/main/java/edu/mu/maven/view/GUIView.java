@@ -57,7 +57,6 @@ public class GUIView extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
 		tableModel = new DefaultTableModel(7,1);
 		table = new JTable(tableModel);
 		table.setBounds(185, 120, 345, 552);
