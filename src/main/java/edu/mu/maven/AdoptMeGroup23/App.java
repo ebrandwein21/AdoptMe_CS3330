@@ -47,6 +47,14 @@ public class App {
     });
     }
     
+    /**
+     * this method combines the two pet loaders, ExoticAnimaljson and the petloader into one common list
+     * It does this by initiating a new pet list and adding all the pets from the load pets method 
+     * the list of exotic animals from the exotic animal json file loader are then looped over 
+     * the elements of the exotic animal list are then passed through a new instance of the exotic animal adapter and added to the arrayList
+     * 
+     * @return the new combined list of both pet and exotic pet types, exotic pets are able to be added due to the exotic pet adapter
+     */
     public static List<Pet> combineLoaders()
     {
     	List<Pet> combinedPetList = new ArrayList<>();
@@ -63,6 +71,11 @@ public class App {
     			return combinedPetList;
     	
     }
+    
+    /**
+     * 
+     * @param combineLoaders
+     */
     
     public static void savedCombinedLoaders(List<Pet> combineLoaders)
     {
