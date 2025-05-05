@@ -111,7 +111,8 @@ public class GUIView extends JFrame {
 		contentPane.add(title);
 		
 		cannotAdopt = new JLabel("");
-		cannotAdopt.setBounds(586, 214, 45, 13);
+		cannotAdopt.setFont(new Font("Tahoma", Font.PLAIN, 8));
+		cannotAdopt.setBounds(540, 203, 164, 43);
 		contentPane.add(cannotAdopt);
 		
 	}

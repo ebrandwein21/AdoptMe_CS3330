@@ -7,11 +7,8 @@ public class ExoticAnimal {
 
 	public ExoticAnimal(String uniqueId, String animalName, String category, String subSpecies, int yearsOld)
      {
-    	 if(uniqueId != null) {
-//    		 String newID = uniqueId.replaceAll("[^0-9]", "");
-    	 	 this.exoticId = uniqueId;
-    	 }
 
+		 this.uniqueId = uniqueId;
     	 this.animalName = animalName;
     	 this.category = category;
     	 this.subSpecies = subSpecies;

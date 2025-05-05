@@ -191,8 +191,8 @@ public class PetAdoptionController{
 			model.addRow(new Object[]{
 				pet.GetAnimalName()
 			});
+			newPet.getAddMessage().setText("Added " + pet.GetAnimalName());
 			updateGuiTableForSorting();
-			System.out.println(exoticPetList.size());
 			});
 	}
 	
