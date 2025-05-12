@@ -18,7 +18,7 @@ Sort pets by Name, Age, Species and more
 Save pet list to a timestamped JSON file when clicking Save
 
 Running the Code: TThe user should make sure they open the project through Maven and have Java swing installed. To run the code simply type:  
-git clone https://github.com/ebrandwein21/AdoptMe_CS3330.git	
+  git clone https://github.com/ebrandwein21/AdoptMe_CS3330.git	
 ensure that eclipse has found the src folder (which should be done by default)
 Hit the run button on eclipse. There should be the adopt the pet console window popping up on your end :) 
 
