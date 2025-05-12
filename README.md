@@ -21,7 +21,7 @@ Save pet list to a timestamped JSON file when clicking Save
 
 git clone https://github.com/ebrandwein21/AdoptMe_CS3330.git	
 ensure that eclipse has found the src folder (which should be done by default)  
-Hit the run button on eclipse. There should be the adopt pet console window popping up on your end :).
+Hit the run button on eclipse. The adopt a pet console window popping up on your end :).
 
 Created by Esther Brandwein and Samantha Friedman
 
