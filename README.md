@@ -22,6 +22,10 @@ Running the Code: The user should make sure they open the project through Maven 
   ensure that eclipse has found the src folder (which should be done by default)
   Hit the run button on eclipse. There should be the adopt the pet console window popping up on your end :) 
 
+  git clone https://github.com/ebrandwein21/AdoptMe_CS3330.git	
+ensure that eclipse has found the src folder (which should be done by default)
+Hit the run button on eclipse. There should be the adopt pet console window popping up on your end :).
+
 Created by Esther Brandwein and Samantha Friedman
 
 
